@@ -4,8 +4,13 @@ package com.letitgrow.gardenapp;
  * Created by Ashley on 4/6/2015.
  */
 public class plant {
+    private long id;
     private String Favorite;
     private String plantName;
+
+    public long getId() {  return id;   }
+
+    public void setId(long id) { this.id = id;    }
 
     public String getFavorite() {
         return Favorite;

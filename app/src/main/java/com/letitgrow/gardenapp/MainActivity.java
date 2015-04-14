@@ -1,51 +1,106 @@
 package com.letitgrow.gardenapp;
 
 import android.app.Activity;
-import android.database.SQLException;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
+import java.io.File;
+import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
+import java.sql.SQLException;
+import java.util.List;
+import java.util.Random;
+import android.app.ListActivity;
+import android.view.View;
+import android.widget.TextView;
 //import com.letitgrow.gardenapp.SQLiteDBHelper;
 
 
-public class MainActivity extends Activity {
-
+public class MainActivity extends ListActivity {
+    private PlantDataSource datasource;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        ListView listContent = (ListView)findViewById(R.id.contentlist);
 
-        SQLiteDBHelper dbHelper;
-        dbHelper = new SQLiteDBHelper(this);
-        dbHelper.createDataBase();
-        dbHelper.openDataBase();
-    }
+        HardCodeSQLiteHelper myDbHelper;
+        new HardCodeSQLiteHelper(this);
+       // myDbHelper = new HardCodeSQLiteHelper(this);
 
-
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_main, menu);
-        return true;
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
-        int id = item.getItemId();
-
-        //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
-            return true;
+    /*   use this if going back to static DB
+     try {
+            myDbHelper.createDataBase();
+        } catch (IOException ioe) {
+            throw new Error("Unable to create database");
         }
 
-        return super.onOptionsItemSelected(item);
+        try {
+            myDbHelper.openDataBase();
+        } catch(SQLException sqle){
+            try {
+                throw sqle;
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+
+        }*/
+
+        datasource = new PlantDataSource(this);
+        datasource.open();
+      //  datasource.dropTable();
+        datasource.populateTable();
+
+        List<plant> values = datasource.getAllPlants();
+
+        // use the SimpleCursorAdapter to show the
+        // elements in a ListView
+        final ArrayAdapter<plant> adapter = new ArrayAdapter<plant>(this,
+                android.R.layout.simple_list_item_1, values);
+        setListAdapter(adapter);
+
+
+        /* ListView lv = getListView();
+
+        // listening to single list item on click
+        lv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            public void onItemClick(AdapterView<?> parent, View view,
+                                    int position, long id) {
+
+                // selected item
+                //String product = ((TextView) view).getText().toString();
+                Integer plantID = adapter.getItemId();
+
+                // Launching new Activity on selecting single List Item
+                Intent i = new Intent(getApplicationContext(), plantDetail.class);
+                // sending data to new activity
+                i.putExtra("plantID", plantID);
+                startActivity(i);
+
+            }
+        }); */
+
+
     }
+
+
+    @Override
+    protected void onResume() {
+        datasource.open();
+        super.onResume();
+    }
+
+    @Override
+    protected void onPause() {
+        datasource.close();
+        super.onPause();
+    }
+
 }
