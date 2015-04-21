@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+
+    <LinearLayout
+        android:id="@+id/LinearLayout01"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" >
+
+        <TextView
+            android:id="@+id/plant_text_name"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="4dp"
+            android:layout_marginTop="6dp"
+            android:lines="1"
+            android:layout_weight="1"
+            android:text="@+id/TextView01"
+            android:textSize="24dp"
+            >
+        </TextView>
+
+    </LinearLayout>
+
+    <TextView
+        android:id="@+id/plant_text_depth"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="4dp"
+        android:layout_marginTop="6dp"
+        android:lines="1"
+        android:layout_weight="1"
+        android:text="@+id/TextView01"
+        android:textSize="24dp"
+        >
+    </TextView>
+
+    <TextView
+        android:id="@+id/plant_text_spacing"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="4dp"
+        android:layout_marginTop="6dp"
+        android:lines="1"
+        android:layout_weight="1"
+        android:text="@+id/TextView01"
+        android:textSize="24dp"
+        >
+    </TextView>
+
+    <TextView
+        android:id="@+id/plant_text_favorite"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="4dp"
+        android:layout_marginTop="6dp"
+        android:lines="1"
+        android:layout_weight="1"
+        android:text="@+id/TextView01"
+        android:textSize="24dp"
+        >
+    </TextView>
+
+    <ToggleButton
+        android:id="@+id/toggleButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textOn="YES"
+        android:textOff="NO"
+        android:onClick="onToggleClicked"/>
+
+
+</LinearLayout>
