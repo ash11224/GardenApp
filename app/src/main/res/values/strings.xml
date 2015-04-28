@@ -7,9 +7,27 @@
     <string name="no_plants">Currently there are no Plants</string>
     <string name="menu_insert">Add Item</string>
     <string name="menu_delete">Delete Todo</string>
+
     <string name="plant_text_name">Name</string>
-    <string name="plant_text_depth">Depth</string>
+    <string name="plant_label_favorite">Favorite</string>
+    <string name="plant_label_spacing">Spacing</string>
     <string name="plant_text_spacing">Spacing</string>
-    <string name="plant_text_favorite">Favorite</string>
-    <string name="plant_edit_confirm">Confirm</string>
+    <string name="plant_label_sqft">Spacing</string>
+    <string name="plant_text_sqft">Spacing</string>
+    <string name="plant_label_depth">Depth</string>
+    <string name="plant_text_depth">Depth</string>
+    <string name="plant_label_spring">Spring</string>
+    <string name="plant_text_spring">Spring</string>
+    <string name="plant_label_fall">Fall</string>
+    <string name="plant_text_fall">Fall</string>
+    <string name="plant_label_companions">Companions</string>
+    <string name="plant_text_companions">Companions</string>
+    <string name="plant_label_nuisance">Nuisance</string>
+    <string name="plant_text_nuisance">Nuisance</string>
+    <string name="plant_label_helpers">Helpers</string>
+    <string name="plant_text_helpers">Helpers</string>
+    <string name="plant_label_pests">Pests</string>
+    <string name="plant_text_pests">Pests</string>
+    <string name="pic_name">Picture</string>
+
 </resources>

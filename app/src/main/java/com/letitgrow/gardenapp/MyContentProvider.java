@@ -177,6 +177,14 @@ public class MyContentProvider extends ContentProvider{
                     PlantTable.COLUMN_SPACING,
                     PlantTable.COLUMN_DEPTH,
                     PlantTable.COLUMN_COMPANIONS,
+                    PlantTable.COLUMN_NUISANCES,
+                    PlantTable.COLUMN_HELPERS,
+                    PlantTable.COLUMN_PESTS,
+                    PlantTable.SPRING_BEG,
+                    PlantTable.SPRING_END,
+                    PlantTable.FALL_BEG,
+                    PlantTable.FALL_END,
+                    PlantTable.PIC_NAME,
                     PlantTable.COLUMN_FAVORITE
             };
             if (projection != null) {

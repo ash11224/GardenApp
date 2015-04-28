@@ -1,65 +1,31 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical" android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-
-    <LinearLayout
-        android:id="@+id/LinearLayout01"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content" >
-
-        <TextView
-            android:id="@+id/plant_text_name"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="4dp"
-            android:layout_marginTop="6dp"
-            android:lines="1"
-            android:layout_weight="1"
-            android:text="@+id/TextView01"
-            android:textSize="24dp"
-            >
-        </TextView>
-
-    </LinearLayout>
-
     <TextView
-        android:id="@+id/plant_text_depth"
+        android:id="@+id/plant_text_name"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginStart="4dp"
         android:layout_marginLeft="4dp"
         android:layout_marginTop="6dp"
         android:lines="1"
-        android:layout_weight="1"
-        android:text="@+id/TextView01"
-        android:textSize="24dp"
+        android:textSize="24sp"
         >
     </TextView>
 
     <TextView
-        android:id="@+id/plant_text_spacing"
+        android:id="@+id/plant_label_favorite"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginStart="4dp"
         android:layout_marginLeft="4dp"
-        android:layout_marginTop="6dp"
         android:lines="1"
-        android:layout_weight="1"
-        android:text="@+id/TextView01"
-        android:textSize="24dp"
-        >
-    </TextView>
-
-    <TextView
-        android:id="@+id/plant_text_favorite"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="4dp"
-        android:layout_marginTop="6dp"
-        android:lines="1"
-        android:layout_weight="1"
-        android:text="@+id/TextView01"
-        android:textSize="24dp"
+        android:layout_below="@id/plant_text_name"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentLeft="true"
+        android:textSize="24sp"
         >
     </TextView>
 
@@ -67,9 +33,234 @@
         android:id="@+id/toggleButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:textSize="16sp"
         android:textOn="YES"
         android:textOff="NO"
+        android:layout_below="@id/plant_text_name"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentRight="true"
         android:onClick="onToggleClicked"/>
 
+    <TextView
+        android:id="@+id/plant_label_spacing"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="4dp"
+        android:layout_marginLeft="4dp"
+        android:lines="1"
+        android:layout_below="@id/plant_label_favorite"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentLeft="true"
+        android:textSize="16sp"
+        >
+    </TextView>
 
-</LinearLayout>
+    <TextView
+        android:id="@+id/pic_name"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="4dp"
+        android:layout_marginLeft="4dp"
+        android:lines="1"
+        android:layout_below="@id/toggleButton"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentRight="true"
+        android:textSize="16sp"
+        >
+    </TextView>
+
+    <TextView
+        android:id="@+id/plant_text_spacing"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="4dp"
+        android:layout_marginLeft="4dp"
+        android:lines="1"
+        android:layout_below="@id/plant_label_spacing"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentLeft="true"
+        android:textSize="16sp"
+        >
+    </TextView>
+
+    <TextView
+        android:id="@+id/plant_label_sqft"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="4dp"
+        android:lines="1"
+        android:layout_below="@id/plant_text_spacing"
+        android:layout_alignParentLeft="true"
+        android:textSize="16sp"
+        >
+    </TextView>
+
+    <TextView
+        android:id="@+id/plant_text_sqft"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="4dp"
+        android:lines="1"
+        android:layout_below="@id/plant_label_sqft"
+        android:layout_alignParentLeft="true"
+        android:textSize="16sp"
+        >
+    </TextView>
+
+    <TextView
+        android:id="@+id/plant_label_depth"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="4dp"
+        android:lines="1"
+        android:layout_below="@id/plant_text_sqft"
+        android:layout_alignParentLeft="true"
+        android:textSize="16sp"
+        >
+    </TextView>
+
+    <TextView
+        android:id="@+id/plant_text_depth"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="4dp"
+        android:lines="1"
+        android:layout_below="@id/plant_label_depth"
+        android:layout_alignParentLeft="true"
+        android:textSize="16sp"
+        >
+    </TextView>
+
+
+
+    <TextView
+        android:id="@+id/plant_label_spring"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="4dp"
+        android:lines="1"
+        android:layout_below="@id/plant_text_depth"
+        android:textSize="16sp"
+        >
+    </TextView>
+
+    <TextView
+        android:id="@+id/plant_text_spring"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="4dp"
+        android:lines="1"
+        android:layout_below="@id/plant_label_spring"
+        android:textSize="16sp"
+        >
+    </TextView>
+
+    <TextView
+        android:id="@+id/plant_label_fall"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="4dp"
+        android:lines="1"
+        android:layout_below="@id/plant_text_spring"
+        android:textSize="16sp"
+        >
+    </TextView>
+
+    <TextView
+        android:id="@+id/plant_text_fall"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="4dp"
+        android:lines="1"
+        android:layout_below="@id/plant_label_fall"
+        android:textSize="16sp"
+        >
+    </TextView>
+
+    <TextView
+        android:id="@+id/plant_label_companions"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="4dp"
+        android:lines="1"
+        android:layout_below="@id/plant_text_fall"
+        android:textSize="16sp"
+        >
+    </TextView>
+
+    <TextView
+        android:id="@+id/plant_text_companions"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="4dp"
+        android:layout_below="@id/plant_label_companions"
+        android:textSize="16sp"
+        >
+    </TextView>
+
+    <TextView
+        android:id="@+id/plant_label_nuisance"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="4dp"
+        android:lines="1"
+        android:layout_below="@id/plant_text_companions"
+        android:textSize="16sp"
+        >
+    </TextView>
+
+    <TextView
+        android:id="@+id/plant_text_nuisance"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="4dp"
+        android:layout_below="@id/plant_label_nuisance"
+        android:textSize="16sp"
+        >
+    </TextView>
+
+    <TextView
+        android:id="@+id/plant_label_helpers"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="4dp"
+        android:lines="1"
+        android:layout_below="@id/plant_text_nuisance"
+        android:textSize="16sp"
+        >
+    </TextView>
+
+    <TextView
+        android:id="@+id/plant_text_helpers"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="4dp"
+        android:layout_below="@id/plant_label_helpers"
+        android:textSize="16sp"
+        >
+    </TextView>
+
+    <TextView
+        android:id="@+id/plant_label_pests"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="4dp"
+        android:lines="1"
+        android:layout_below="@id/plant_text_helpers"
+        android:textSize="16sp"
+        >
+    </TextView>
+
+    <TextView
+        android:id="@+id/plant_text_pests"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="4dp"
+        android:layout_below="@id/plant_label_pests"
+        android:textSize="16sp"
+        >
+    </TextView>
+
+
+
+</RelativeLayout>

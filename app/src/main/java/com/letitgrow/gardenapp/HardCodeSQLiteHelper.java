@@ -10,7 +10,7 @@ import android.util.Log;
  */
 public class HardCodeSQLiteHelper extends SQLiteOpenHelper {
 
-    private static final int DATABASE_VERSION = 16;
+    private static final int DATABASE_VERSION = 23;
 
     private static String DB_NAME = "plantdatabase";
     //private static String DB_PATH = "/data/data/com.letitgrow.gardenapp/databases/";

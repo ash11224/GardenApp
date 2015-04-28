@@ -1,6 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
 
-   
+    <ToggleButton
+        android:id="@+id/mainToggleButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textOn="FAVS"
+        android:textOff="ALL"
+        android:onClick="onMainToggleClicked"/>
 
 </menu>

@@ -2,6 +2,7 @@ package com.letitgrow.gardenapp;
 
 import android.app.Activity;
 import android.app.LoaderManager;
+import android.content.ContentValues;
 import android.content.CursorLoader;
 import android.content.Intent;
 import android.content.Loader;
@@ -18,7 +19,7 @@ import android.widget.ListView;
 import android.app.ListActivity;
 import android.view.View;
 import android.widget.SimpleCursorAdapter;
-
+import android.widget.ToggleButton;
 
 
 public class MainActivity extends ListActivity implements
@@ -101,6 +102,18 @@ public class MainActivity extends ListActivity implements
                 to, 0);
 
         setListAdapter(adapter);
+    }
+    public void onMainToggleClicked(View view) {
+        // Is the toggle on?
+        boolean on = ((ToggleButton) view).isChecked();
+        ContentValues values = new ContentValues();
+        if (on) {
+           // values.put(PlantTable.COLUMN_FAVORITE, "Y");
+        } else {
+           // values.put(PlantTable.COLUMN_FAVORITE, "N");
+        }
+
+       // getContentResolver().update(plantUri, values, null, null);
     }
 
     @Override
