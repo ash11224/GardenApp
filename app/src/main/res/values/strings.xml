@@ -30,4 +30,10 @@
     <string name="plant_text_pests">Pests</string>
     <string name="pic_name">Picture</string>
 
+    <string name="now_button">PLANT NOW</string>
+    <string name="date_text">Date</string>
+    <string name="title_activity_plant_now">PlantNowActivity</string>
+
+    <string name="hello_world">Hello world!</string>
+
 </resources>

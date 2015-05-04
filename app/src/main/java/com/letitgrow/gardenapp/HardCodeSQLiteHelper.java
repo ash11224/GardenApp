@@ -1,6 +1,7 @@
 package com.letitgrow.gardenapp;
 
 import android.content.Context;
+import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.util.Log;
@@ -10,7 +11,7 @@ import android.util.Log;
  */
 public class HardCodeSQLiteHelper extends SQLiteOpenHelper {
 
-    private static final int DATABASE_VERSION = 23;
+    private static final int DATABASE_VERSION = 24;
 
     private static String DB_NAME = "plantdatabase";
     //private static String DB_PATH = "/data/data/com.letitgrow.gardenapp/databases/";
@@ -29,5 +30,4 @@ public class HardCodeSQLiteHelper extends SQLiteOpenHelper {
         PlantTable.onUpgrade(db, oldVersion, newVersion);
 
     }
-
 }

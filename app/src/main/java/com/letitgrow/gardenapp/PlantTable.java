@@ -49,7 +49,7 @@ public class PlantTable {
             +", "+COLUMN_COMPANIONS+", "+ COLUMN_NUISANCES+", "+COLUMN_HELPERS+", "+ COLUMN_PESTS
             +", "+SPRING_BEG +", "+ SPRING_END+", "+FALL_BEG+", "+ FALL_END+", "+ PIC_NAME
             +") VALUES"
-            +"('Artichoke',NULL , NULL,'', '', '', '',0,0,-12,-5, 'ART'), "
+            +"('Artichoke',NULL , NULL,'', '', '', '',-9,-1,-10,-5, 'ART'), "
             +"('Asian Greens', 0.5, 12,'', '', '', '',-9,-2,-11,5, 'ACA'), "
             +"('Asparagus', 1.5, 18,'', '', '', '',-9,-2,0,0, 'ASP'), "
             +"('Beans: snap and lima', 1.5, 4,'', '', '', '',2,8,-15,-11, 'BEA'), "

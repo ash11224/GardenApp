@@ -23,8 +23,8 @@ public class MyContentProvider extends ContentProvider{
     private HardCodeSQLiteHelper database;
 
     // used for the UriMacher
-    private static final int PLANTS_LISTED = 10;
-    private static final int PLANT_ID = 20;
+    private static final int PLANTS_ALL = 10;
+    private static final int PLANTS_ALL_ID = 20;
 
     private static final String AUTHORITY = "com.letitgrow.gardenapp.contentprovider";
 
@@ -39,8 +39,8 @@ public class MyContentProvider extends ContentProvider{
 
     private static final UriMatcher sURIMatcher = new UriMatcher(UriMatcher.NO_MATCH);
     static {
-        sURIMatcher.addURI(AUTHORITY, BASE_PATH, PLANTS_LISTED);
-        sURIMatcher.addURI(AUTHORITY, BASE_PATH + "/#", PLANT_ID);
+        sURIMatcher.addURI(AUTHORITY, BASE_PATH, PLANTS_ALL);
+        sURIMatcher.addURI(AUTHORITY, BASE_PATH + "/#", PLANTS_ALL_ID);
     }
 
     @Override
@@ -63,9 +63,10 @@ public class MyContentProvider extends ContentProvider{
 
         int uriType = sURIMatcher.match(uri);
         switch (uriType) {
-            case PLANTS_LISTED:
+            case PLANTS_ALL:
                 break;
-            case PLANT_ID:
+
+            case PLANTS_ALL_ID:
                 // adding the ID to the original query
                 queryBuilder.appendWhere(PlantTable.COLUMN_ID + "="
                         + uri.getLastPathSegment());
@@ -95,7 +96,7 @@ public class MyContentProvider extends ContentProvider{
         int rowsDeleted = 0;
         long id = 0;
         switch (uriType) {
-            case PLANTS_LISTED:
+            case PLANTS_ALL:
                 id = sqlDB.insert(PlantTable.TABLE_PLANTS, null, values);
                 break;
             default:
@@ -111,11 +112,11 @@ public class MyContentProvider extends ContentProvider{
         SQLiteDatabase sqlDB = database.getWritableDatabase();
         int rowsDeleted = 0;
         switch (uriType) {
-            case PLANTS_LISTED:
+            case PLANTS_ALL:
                 rowsDeleted = sqlDB.delete(PlantTable.TABLE_PLANTS, selection,
                         selectionArgs);
                 break;
-            case PLANT_ID:
+            case PLANTS_ALL_ID:
                 String id = uri.getLastPathSegment();
                 if (TextUtils.isEmpty(selection)) {
                     rowsDeleted = sqlDB.delete(PlantTable.TABLE_PLANTS,
@@ -142,13 +143,13 @@ public class MyContentProvider extends ContentProvider{
         SQLiteDatabase sqlDB = database.getWritableDatabase();
         int rowsUpdated = 0;
         switch (uriType) {
-            case PLANTS_LISTED:
+            case PLANTS_ALL:
                 rowsUpdated = sqlDB.update(PlantTable.TABLE_PLANTS,
                         values,
                         selection,
                         selectionArgs);
                 break;
-            case PLANT_ID:
+            case PLANTS_ALL_ID:
                 String id = uri.getLastPathSegment();
                 if (TextUtils.isEmpty(selection)) {
                     rowsUpdated = sqlDB.update(PlantTable.TABLE_PLANTS,

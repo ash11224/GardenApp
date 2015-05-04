@@ -1,0 +1,78 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
+    android:layout_height="match_parent" android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:orientation="horizontal"
+    android:paddingRight="@dimen/activity_horizontal_margin"
+    android:paddingTop="@dimen/activity_vertical_margin"
+    android:paddingBottom="@dimen/activity_vertical_margin"
+    tools:context="com.letitgrow.gardenapp.PlantNowActivity">
+
+
+    <LinearLayout
+        android:id="@+id/topLayout"
+        android:layout_width="fill_parent"
+        android:layout_height="50sp"
+        android:layout_alignParentTop="true">
+
+    <TextView
+        android:id="@+id/plantNow"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:textSize="24sp"
+        android:layout_weight="3"
+     />
+
+    <ToggleButton
+        android:id="@+id/mainToggleButtonNow"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:textOn="ALL"
+        android:textOff="FAVS"
+        android:onClick="onNowToggleClicked"
+        android:layout_weight="1"
+        />
+
+    </LinearLayout>
+
+
+    <ListView xmlns:android="http://schemas.android.com/apk/res/android"
+        android:id="@+id/list_PlantNow"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/topLayout"
+        android:layout_weight="1.0"/>
+
+
+
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="50sp"
+        android:layout_alignParentBottom="true">
+
+        <ImageButton
+            android:id="@+id/LessOneDayButton"
+            android:layout_width="0dp"
+            android:layout_height="50sp"
+            android:onClick="onLessDayClicked"
+            android:scaleType="fitCenter"
+            android:adjustViewBounds="true"
+            android:layout_weight="1"
+            android:src="@drawable/backarrow"/>
+
+
+        <ImageButton
+            android:id="@+id/AddOneDayButton"
+            android:layout_width="0dp"
+            android:layout_height="50sp"
+            android:onClick="onAddDayClicked"
+            android:scaleType="fitCenter"
+            android:adjustViewBounds="true"
+            android:layout_weight="1"
+            android:src="@drawable/arrow"/>
+
+    </LinearLayout>
+
+
+
+
+</RelativeLayout>

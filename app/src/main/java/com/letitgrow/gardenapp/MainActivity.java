@@ -14,13 +14,14 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.widget.AdapterView;
+import android.widget.EditText;
 import android.widget.ListView;
 
 import android.app.ListActivity;
 import android.view.View;
 import android.widget.SimpleCursorAdapter;
+import android.widget.TextView;
 import android.widget.ToggleButton;
-
 
 public class MainActivity extends ListActivity implements
         LoaderManager.LoaderCallbacks<Cursor> {
@@ -30,33 +31,27 @@ public class MainActivity extends ListActivity implements
     private static final int DELETE_ID = Menu.FIRST + 1;
     // private Cursor cursor;
     private SimpleCursorAdapter adapter;
+    boolean ListFavorites;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.plant_list);
         this.getListView().setDividerHeight(2);
+        ListFavorites = false;
         fillData();
         registerForContextMenu(getListView());
+
     }
     // create the menu based on the XML defintion
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater inflater = getMenuInflater();
-        inflater.inflate(R.menu.listmenu, menu);
-        return true;
-    }
+        inflater.inflate(R.menu.menu_main, menu);
 
-    // Reaction to the menu selection
- /*   @Override
-   public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()) {
-            case R.id.insert:
-                createTodo();
-                return true;
-        }
-        return super.onOptionsItemSelected(item);
-    }*/
+        return true;
+
+    }
 
     @Override
     public boolean onContextItemSelected(MenuItem item) {
@@ -103,17 +98,38 @@ public class MainActivity extends ListActivity implements
 
         setListAdapter(adapter);
     }
+
+    public void onPlantNowClicked(View view){
+        Intent i = new Intent(this, PlantNowActivity.class);
+        Uri todoUri = Uri.parse(MyContentProvider.CONTENT_URI + "/");
+        i.putExtra(MyContentProvider.CONTENT_TYPE, todoUri);
+        i.putExtra("favPushed", ListFavorites);
+        startActivityForResult(i, Activity.RESULT_OK);
+    }
+
     public void onMainToggleClicked(View view) {
         // Is the toggle on?
         boolean on = ((ToggleButton) view).isChecked();
         ContentValues values = new ContentValues();
         if (on) {
-           // values.put(PlantTable.COLUMN_FAVORITE, "Y");
+           ListFavorites = true;
         } else {
-           // values.put(PlantTable.COLUMN_FAVORITE, "N");
+           ListFavorites = false;
         }
 
-       // getContentResolver().update(plantUri, values, null, null);
+        getLoaderManager().restartLoader(0, null, this);
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data){
+        super.onActivityResult(requestCode, resultCode, data);
+
+        if (resultCode == Activity.RESULT_OK) {
+            ListFavorites = data.getBooleanExtra("favNowPushed", false);
+            ToggleButton aTglBtn = (ToggleButton) findViewById(R.id.mainToggleButton);
+            aTglBtn.setChecked(ListFavorites);
+        }
+
     }
 
     @Override
@@ -126,9 +142,16 @@ public class MainActivity extends ListActivity implements
     // creates a new loader after the initLoader () call
     @Override
     public Loader<Cursor> onCreateLoader(int id, Bundle args) {
+        String SELECTION;
+
+        if (ListFavorites){
+            SELECTION = PlantTable.COLUMN_FAVORITE+"= 'Y'";
+        }
+        else SELECTION = null;
+
         String[] projection = { PlantTable.COLUMN_ID, PlantTable.COLUMN_PLANT };
         CursorLoader cursorLoader = new CursorLoader(this,
-                MyContentProvider.CONTENT_URI, projection, null, null, null);
+                MyContentProvider.CONTENT_URI, projection, SELECTION, null, null);
         return cursorLoader;
     }
 

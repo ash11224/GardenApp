@@ -1,20 +1,38 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical" android:layout_width="match_parent"
     android:layout_height="match_parent">
+    <ToggleButton
+        android:id="@+id/mainToggleButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textOn="ALL"
+        android:textOff="FAVS"
+        android:onClick="onMainToggleClicked"/>
+
+    <Button
+        android:id="@+id/NowButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_toEndOf="@+id/mainToggleButton"
+        android:layout_toRightOf="@+id/mainToggleButton"
+        android:text="@string/now_button"
+        android:onClick="onPlantNowClicked"/>
 
 
     <ListView
         android:id="@android:id/list"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content" >
+        android:layout_height="wrap_content"
+        android:layout_below="@id/mainToggleButton">
     </ListView>
 
     <TextView
         android:id="@android:id/empty"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/no_plants" />
+        android:text="@string/no_plants"
+        android:layout_below="@id/mainToggleButton"/>
 
 
-</LinearLayout>
+</RelativeLayout>

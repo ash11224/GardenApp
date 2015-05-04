@@ -88,18 +88,6 @@ public class PlantDetailActivity extends Activity{
 
             fillData(plantUri);
         }
-
-      /*  confirmButton.setOnClickListener(new View.OnClickListener() {
-            public void onClick(View view) {
-                if (TextUtils.isEmpty(mTitleText.getText().toString())) {
-                    makeToast();
-                } else {
-                    setResult(RESULT_OK);
-                    finish();
-                }
-            }
-
-        });*/
     }
 
     private void fillData(Uri uri) {
@@ -124,16 +112,6 @@ public class PlantDetailActivity extends Activity{
                 null);
         if (cursor != null) {
             cursor.moveToFirst();
-        /*    String category = cursor.getString(cursor
-                    .getColumnIndexOrThrow(PlantTable.COLUMN_DEPTH));
-
-            for (int i = 0; i < mCategory.getCount(); i++) {
-
-                String s = (String) mCategory.getItemAtPosition(i);
-                if (s.equalsIgnoreCase(category)) {
-                    mCategory.setSelection(i);
-                }
-           }*/
 
             String fav = cursor.getString(cursor.getColumnIndexOrThrow(PlantTable.COLUMN_FAVORITE));
             ToggleButton  tglbtn = (ToggleButton)findViewById(R.id.toggleButton);
@@ -253,43 +231,6 @@ public class PlantDetailActivity extends Activity{
         getContentResolver().update(plantUri, values, null, null);
     }
 
-   /* protected void onSaveInstanceState(Bundle outState) {
-        super.onSaveInstanceState(outState);
-        saveState();
-        outState.putParcelable(MyContentProvider.CONTENT_ITEM_TYPE, plantUri);
-    }*/
-
-    /*@Override
-    protected void onPause() {
-        super.onPause();
-        saveState();
-    }*/
-
-  /*  private void saveState() {
-       // String category = (String) mCategory.getSelectedItem();
-        String summary = PlantTitleText.getText().toString();
-        String description = PlantDepthText.getText().toString();
-
-        // only save if either summary or description
-        // is available
-
-        if (description.length() == 0 && summary.length() == 0) {
-            return;
-        }
-
-        ContentValues values = new ContentValues();
-       // values.put(PlantTable.COLUMN_SPACING, category);
-        values.put(PlantTable.COLUMN_PLANT, summary);
-        values.put(PlantTable.COLUMN_DEPTH, description);
-
-        if (plantUri == null) {
-            // New
-            plantUri = getContentResolver().insert(MyContentProvider.CONTENT_URI, values);
-        } else {
-            // Update
-            getContentResolver().update(plantUri, values, null, null);
-        }
-    } */
 
     private void makeToast() {
         Toast.makeText(PlantDetailActivity.this, "Please maintain a summary",

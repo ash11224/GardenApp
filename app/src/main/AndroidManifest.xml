@@ -8,7 +8,8 @@
         android:theme="@style/AppTheme" >
         <activity
             android:name=".MainActivity"
-            android:label="@string/app_name" >
+            android:label="@string/app_name"
+            android:launchMode="singleTop">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -19,11 +20,21 @@
             android:name=".PlantDetailActivity"
             android:windowSoftInputMode="stateVisible|adjustResize" >
         </activity>
+        <activity
+            android:name=".PlantNowActivity"
+            android:label="@string/app_name"
+            android:parentActivityName="com.letitgrow.gardenapp.MainActivity" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.letitgrow.gardenapp.MainActivity" />
+        </activity>
 
         <provider
             android:name=".MyContentProvider"
             android:authorities="com.letitgrow.gardenapp.contentprovider" >
         </provider>
+
+
     </application>
 
 </manifest>
