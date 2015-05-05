@@ -129,19 +129,20 @@ public class PlantDetailActivity extends Activity{
             FavoriteLabel.setText("Favorite: ");
 
             PlantSpacingLabel.setText("Plant Spacing: ");
+            PerSquareFootLabel.setText("Plants per Sq Ft: ");
             str = cursor.getString(cursor
                     .getColumnIndexOrThrow(PlantTable.COLUMN_SPACING));
-            PlantSpacingText.setText(String.format("%s inches", str));
-
-            PerSquareFootLabel.setText("Plants per Sq Ft: ");
-            if (isNumeric(str)){
+            if (str == null){
+                str = "No information available";
+                PlantSpacingText.setText(String.format("%s", str));
+                PerSquareFootText.setText(String.format("%s", str));
+            } else if (isNumeric(str)){
+                PlantSpacingText.setText(String.format("%s inches", str));
                 num1 = Double.parseDouble(str);
                 num2 = 12/num1;
                 str = Double.toString(num2);
+                PerSquareFootText.setText(String.format("%s", str));
             }
-            else str = "No information available";
-
-            PerSquareFootText.setText(String.format("%s", str));
 
             PlantDepthLabel.setText("Seed Depth: ");
             str = cursor.getString(cursor
