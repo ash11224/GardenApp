@@ -145,7 +145,6 @@ public class PlantNowActivity extends Activity {
         final StableArrayAdapter adapter = new StableArrayAdapter(this, android.R.layout.simple_list_item_1, list);
         listview.setAdapter(adapter);
 
-
         listview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
 
             @Override
@@ -301,7 +300,7 @@ public class PlantNowActivity extends Activity {
 
     }
 
-    public boolean inRange(Calendar day, Calendar frostDate, int beg, int end){
+    public static boolean inRange(Calendar day, Calendar frostDate, int beg, int end){
         boolean okToPlant = false;
 
         int today = (day.get(Calendar.YEAR) * 10000) +

@@ -2,7 +2,6 @@ package test;
 
 import android.content.Intent;
 import android.widget.Button;
-import android.widget.ListView;
 
 import com.letitgrow.gardenapp.MainActivity;
 
@@ -32,14 +31,19 @@ public class MainActivityUnitTest extends android.test.ActivityUnitTestCase<Main
         assertNotNull(activity.findViewById(buttonId));
         Button view = (Button) activity.findViewById(buttonId);
         assertEquals("Incorrect label of the button", "ALL", view.getText());
+
     }
 
-    public void testToggleBtnClickText() {
+    public void testToggle1BtnClickText() {
+        String expected;
         buttonId = com.letitgrow.gardenapp.R.id.mainToggleButton;
         assertNotNull(activity.findViewById(buttonId));
         Button view = (Button) activity.findViewById(buttonId);
+        String start = (String) view.getText();
+        if (start == "FAVS"){ expected = "ALL";}
+        else expected = "FAVS";
         view.performClick();
-        assertEquals("Incorrect label of the button", "FAVS", view.getText());
+        assertEquals("Incorrect label of the button", expected, view.getText());
     }
 
     public void testNowBtnText() {
