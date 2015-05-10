@@ -273,7 +273,7 @@ public class PlantNowActivityUnitTest extends android.test.ActivityUnitTestCase<
         rangeDate.set(Calendar.MONTH, 1);  //zero based
         rangeDate.set(Calendar.DAY_OF_MONTH, 8);
         boolean result = PlantNowActivity.inRange(testDate,rangeDate,0,0);
-        assertEquals("Result not in correct range", true, result);
+        assertEquals("Result not in correct range", false, result);
     }
 
     public void testDateRange13() {

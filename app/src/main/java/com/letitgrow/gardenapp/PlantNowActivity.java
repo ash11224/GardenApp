@@ -303,35 +303,41 @@ public class PlantNowActivity extends Activity {
     public static boolean inRange(Calendar day, Calendar frostDate, int beg, int end){
         boolean okToPlant = false;
 
-        int today = (day.get(Calendar.YEAR) * 10000) +
-                ((day.get(Calendar.MONTH) + 1) * 100) +
-                (day.get(Calendar.DAY_OF_MONTH));
+        if ((beg == 0) && (end == 0)){
+            okToPlant = false;
+        } else {
+
+            int today = (day.get(Calendar.YEAR) * 10000) +
+                    ((day.get(Calendar.MONTH) + 1) * 100) +
+                    (day.get(Calendar.DAY_OF_MONTH));
 
 
-        Calendar BEG = Calendar.getInstance();
-        Calendar END = Calendar.getInstance();
+            Calendar BEG = Calendar.getInstance();
+            Calendar END = Calendar.getInstance();
 
-        BEG.set(Calendar.YEAR, frostDate.get(Calendar.YEAR));
-        BEG.set(Calendar.MONTH, frostDate.get(Calendar.MONTH)); //zero based
-        BEG.set(Calendar.DAY_OF_MONTH, frostDate.get(Calendar.DAY_OF_MONTH));
+            BEG.set(Calendar.YEAR, frostDate.get(Calendar.YEAR));
+            BEG.set(Calendar.MONTH, frostDate.get(Calendar.MONTH)); //zero based
+            BEG.set(Calendar.DAY_OF_MONTH, frostDate.get(Calendar.DAY_OF_MONTH));
 
-        END.set(Calendar.YEAR, frostDate.get(Calendar.YEAR));
-        END.set(Calendar.MONTH, frostDate.get(Calendar.MONTH)); //zero based
-        END.set(Calendar.DAY_OF_MONTH, frostDate.get(Calendar.DAY_OF_MONTH));
+            END.set(Calendar.YEAR, frostDate.get(Calendar.YEAR));
+            END.set(Calendar.MONTH, frostDate.get(Calendar.MONTH)); //zero based
+            END.set(Calendar.DAY_OF_MONTH, frostDate.get(Calendar.DAY_OF_MONTH));
 
-        BEG.add(Calendar.DAY_OF_MONTH,(beg-1)*7 ); //to make time period inclusive of beg date
-        END.add(Calendar.DAY_OF_MONTH, (end)*7);
+            BEG.add(Calendar.DAY_OF_MONTH, (int) (beg * 7.5));
+            END.add(Calendar.DAY_OF_MONTH, (int) (end * 7.5));
 
-        int BegDate = (BEG.get(Calendar.YEAR) * 10000) +
-                ((BEG.get(Calendar.MONTH) + 1) * 100) +
-                (BEG.get(Calendar.DAY_OF_MONTH));
+            int BegDate = (BEG.get(Calendar.YEAR) * 10000) +
+                    ((BEG.get(Calendar.MONTH) + 1) * 100) +
+                    (BEG.get(Calendar.DAY_OF_MONTH));
 
-        int EndDate = (END.get(Calendar.YEAR) * 10000) +
-                ((END.get(Calendar.MONTH) + 1) * 100) +
-                (END.get(Calendar.DAY_OF_MONTH));
+            int EndDate = (END.get(Calendar.YEAR) * 10000) +
+                    ((END.get(Calendar.MONTH) + 1) * 100) +
+                    (END.get(Calendar.DAY_OF_MONTH));
 
-        if ((BegDate <= today) && (today <= EndDate)){
-            okToPlant = true;
+            if ((BegDate <= today) && (today <= EndDate)) {
+                okToPlant = true;
+            }
+
         }
         return okToPlant;
     }
