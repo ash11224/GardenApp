@@ -8,6 +8,10 @@
     <string name="menu_insert">Add Item</string>
     <string name="menu_delete">Delete Todo</string>
 
+    <string name="pref_user_settings">Manual Settings</string>
+    <string name="pref_frost_dates">Frost Dates</string>
+    <string name="pref_frost_dates_summary">Override your frost dates</string>
+
     <string name="plant_text_name">Name</string>
     <string name="plant_label_favorite">Favorite</string>
     <string name="plant_label_spacing">Spacing</string>
@@ -35,5 +39,13 @@
     <string name="title_activity_plant_now">PlantNowActivity</string>
 
     <string name="hello_world">Hello world!</string>
+    <string name="title_activity_settings">Settings</string>
+    <string name="title_activity_set_pref">SetPrefActivity</string>
+
+    <string name="pref_summary_delete_limit">limit</string>
+    <string name="pref_title_sms_delete">sms</string>
+    <string name="pref_title_mms_delete">mms</string>
+    <string name="pref_sms_storage_title">sms store</string>
+
 
 </resources>

@@ -9,6 +9,7 @@ import android.content.Loader;
 import android.database.Cursor;
 import android.net.Uri;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.view.ContextMenu;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -26,6 +27,7 @@ import android.widget.ToggleButton;
 public class MainActivity extends ListActivity implements
         LoaderManager.LoaderCallbacks<Cursor> {
 
+    private static final int RESULT_SETTINGS = 1;
     private static final int ACTIVITY_CREATE = 0;
     private static final int ACTIVITY_EDIT = 1;
     private static final int DELETE_ID = Menu.FIRST + 1;
@@ -36,21 +38,42 @@ public class MainActivity extends ListActivity implements
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.plant_list);
+       // setContentView(R.layout.plant_list);
+
+
         this.getListView().setDividerHeight(2);
         ListFavorites = false;
         fillData();
         registerForContextMenu(getListView());
+        PreferenceManager.setDefaultValues(this, R.layout.preferences , false);
 
     }
+
     // create the menu based on the XML defintion
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        MenuInflater inflater = getMenuInflater();
-        inflater.inflate(R.menu.menu_main, menu);
+      //  MenuInflater inflater = getMenuInflater();
+      //  inflater.inflate(R.menu.menu_settings, menu);
+        getMenuInflater().inflate(R.menu.menu_main, menu);
+
+        return super.onCreateOptionsMenu(menu);
+
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+
+  /*
+   * Because it's onlt ONE option in the menu.
+   * In order to make it simple, We always start SetPreferenceActivity
+   * without checking.
+   */
+
+       Intent intent = new Intent();
+        intent.setClass(MainActivity.this, SettingsActivity.class);
+        startActivityForResult(intent, 0);
 
         return true;
-
     }
 
     @Override

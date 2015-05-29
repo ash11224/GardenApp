@@ -1,0 +1,28 @@
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
+                    android:layout_width="fill_parent"
+                    android:layout_height="fill_parent">
+    <PreferenceCategory
+        android:title="@string/pref_sms_storage_title"
+        android:key="pref_key_storage_settings">
+
+        <com.letitgrow.gardenapp.CustomDatePreference
+            android:persistent="true"
+            android:calendarViewShown="false"
+            android:spinnersShown="true"
+            android:datePickerMode="spinner"
+            android:key="keyname"
+            android:title="First Frost Date"
+            android:defaultValue="2014-08-01"
+            android:summary="Set Frost Dates"/>
+
+
+        <Preference
+            android:key="pref_key_sms_delete_limit"
+            android:summary="@string/pref_summary_delete_limit"
+            android:title="@string/pref_title_sms_delete" />
+        <Preference
+            android:key="pref_key_mms_delete_limit"
+            android:summary="@string/pref_summary_delete_limit"
+            android:title="@string/pref_title_mms_delete" />
+    </PreferenceCategory>
+</PreferenceScreen>

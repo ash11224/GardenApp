@@ -4,11 +4,13 @@ import android.app.Activity;
 import android.content.ContentValues;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.database.SQLException;
 import android.database.sqlite.SQLiteDatabase;
 import android.net.Uri;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.util.Log;
 import android.view.KeyEvent;
 import android.view.Menu;
@@ -29,6 +31,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Date;
 import java.util.Locale;
+import com.letitgrow.gardenapp.CustomDatePreference;
 
 public class PlantNowActivity extends Activity {
     private TextView DateText;
@@ -289,6 +292,12 @@ public class PlantNowActivity extends Activity {
     }
 
     public void SetFrostDates(){
+
+
+        SharedPreferences mySharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
+
+        String my_edittext_preference = mySharedPreferences.getString("keyname", "");
+
 
         FIRST_FROST_DATE.set(Calendar.YEAR, 2015);
         FIRST_FROST_DATE.set(Calendar.MONTH, 10); //zero based

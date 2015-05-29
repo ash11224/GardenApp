@@ -1,6 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.letitgrow.gardenapp" >
+    package="com.letitgrow.gardenapp"
+    >
+   <supports-screens
+       android:anyDensity="true"></supports-screens>
 
     <application
         android:icon="@mipmap/ic_launcher"
@@ -9,7 +12,7 @@
         <activity
             android:name=".MainActivity"
             android:label="@string/app_name"
-            android:launchMode="singleTop">
+            android:launchMode="singleTop" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -23,7 +26,7 @@
         <activity
             android:name=".PlantNowActivity"
             android:label="@string/app_name"
-            android:parentActivityName="com.letitgrow.gardenapp.MainActivity" >
+            android:parentActivityName=".MainActivity" >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.letitgrow.gardenapp.MainActivity" />
@@ -34,7 +37,14 @@
             android:authorities="com.letitgrow.gardenapp.contentprovider" >
         </provider>
 
-
+        <activity
+            android:name=".SettingsActivity"
+            android:label="@string/title_activity_settings"
+            android:parentActivityName=".MainActivity" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.letitgrow.gardenapp.MainActivity" />
+        </activity>
     </application>
 
 </manifest>
