@@ -38,7 +38,7 @@ public class MainActivity extends ListActivity implements
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-       // setContentView(R.layout.plant_list);
+        setContentView(R.layout.plant_list);
 
 
         this.getListView().setDividerHeight(2);
@@ -62,12 +62,6 @@ public class MainActivity extends ListActivity implements
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-
-  /*
-   * Because it's onlt ONE option in the menu.
-   * In order to make it simple, We always start SetPreferenceActivity
-   * without checking.
-   */
 
        Intent intent = new Intent();
         intent.setClass(MainActivity.this, SettingsActivity.class);

@@ -2,27 +2,39 @@
                     android:layout_width="fill_parent"
                     android:layout_height="fill_parent">
     <PreferenceCategory
-        android:title="@string/pref_sms_storage_title"
+        android:title="@string/pref_title"
         android:key="pref_key_storage_settings">
+
+        <SwitchPreference
+            android:key="zone_date_pref"
+            android:title="@string/pref_zone_date"
+            android:summaryOn="Zone"
+            android:summaryOff="Dates"
+            android:defaultValue="true"
+            android:switchTextOn="by zone"
+            android:switchTextOff="by dates"
+            android:disableDependentsState="false"/>
 
         <com.letitgrow.gardenapp.CustomDatePreference
             android:persistent="true"
             android:calendarViewShown="false"
             android:spinnersShown="true"
             android:datePickerMode="spinner"
-            android:key="keyname"
+            android:key="ffd"
             android:title="First Frost Date"
             android:defaultValue="2014-08-01"
             android:summary="Set Frost Dates"/>
 
+        <com.letitgrow.gardenapp.CustomDatePreference
+            android:persistent="true"
+            android:calendarViewShown="false"
+            android:spinnersShown="true"
+            android:datePickerMode="spinner"
+            android:key="lfd"
+            android:title="Last Frost Date"
+            android:defaultValue="2014-08-01"
+            android:summary="Set Frost Dates"/>
 
-        <Preference
-            android:key="pref_key_sms_delete_limit"
-            android:summary="@string/pref_summary_delete_limit"
-            android:title="@string/pref_title_sms_delete" />
-        <Preference
-            android:key="pref_key_mms_delete_limit"
-            android:summary="@string/pref_summary_delete_limit"
-            android:title="@string/pref_title_mms_delete" />
+    
     </PreferenceCategory>
 </PreferenceScreen>

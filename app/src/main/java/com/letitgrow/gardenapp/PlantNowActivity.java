@@ -24,6 +24,7 @@ import android.widget.TextView;
 import android.widget.ToggleButton;
 
 import java.text.DateFormat;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -293,19 +294,26 @@ public class PlantNowActivity extends Activity {
 
     public void SetFrostDates(){
 
-
+        Date ffDate = FIRST_FROST_DATE.getTime();
+        Date lfDate = LAST_FROST_DATE.getTime();
         SharedPreferences mySharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
 
-        String my_edittext_preference = mySharedPreferences.getString("keyname", "");
+        String ffd_str = mySharedPreferences.getString("ffd", "");
+        String lfd_str = mySharedPreferences.getString("lfd", "");
+        DateFormat format = new SimpleDateFormat("yyyy.MM.dd", Locale.ENGLISH);
+        try {
+            ffDate = format.parse(ffd_str);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        try {
+            lfDate = format.parse(lfd_str);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
 
-
-        FIRST_FROST_DATE.set(Calendar.YEAR, 2015);
-        FIRST_FROST_DATE.set(Calendar.MONTH, 10); //zero based
-        FIRST_FROST_DATE.set(Calendar.DAY_OF_MONTH, 27);
-
-        LAST_FROST_DATE.set(Calendar.YEAR, 2015);
-        LAST_FROST_DATE.set(Calendar.MONTH, 2);  //zero based
-        LAST_FROST_DATE.set(Calendar.DAY_OF_MONTH, 8);
+        FIRST_FROST_DATE.setTime(ffDate);
+        LAST_FROST_DATE.setTime(lfDate);
 
     }
 

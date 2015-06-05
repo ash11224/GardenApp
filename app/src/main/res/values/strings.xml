@@ -43,9 +43,9 @@
     <string name="title_activity_set_pref">SetPrefActivity</string>
 
     <string name="pref_summary_delete_limit">limit</string>
-    <string name="pref_title_sms_delete">sms</string>
+    <string name="pref_zone_date">Set Zone or Frost Dates</string>
     <string name="pref_title_mms_delete">mms</string>
-    <string name="pref_sms_storage_title">sms store</string>
+    <string name="pref_title">Zone/Date Preferences</string>
 
 
 </resources>
