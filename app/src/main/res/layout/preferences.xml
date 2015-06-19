@@ -5,15 +5,30 @@
         android:title="@string/pref_title"
         android:key="pref_key_storage_settings">
 
-        <SwitchPreference
-            android:key="zone_date_pref"
-            android:title="@string/pref_zone_date"
-            android:summaryOn="Zone"
-            android:summaryOff="Dates"
-            android:defaultValue="true"
-            android:switchTextOn="by zone"
-            android:switchTextOff="by dates"
-            android:disableDependentsState="false"/>
+        <ListPreference
+            android:key="calc_pref"
+            android:title="Choose how frost dates are set"
+            android:summary="How frost dates are set"
+            android:defaultValue="0"
+            android:entries="@array/calcChoices"
+            android:entryValues="@array/valuesCalcChoices"
+        />
+
+        <EditTextPreference
+            android:key="zip"
+            android:title="Zip Code"
+            android:summary="Zip Code"
+            android:defaultValue="99999"
+            android:inputType="number"
+            android:maxLength="5"
+            />
+
+        <com.letitgrow.gardenapp.ZonePickerPreference
+            android:key="zone"
+            android:title="@string/pref_zone"
+            android:defaultValue="1"
+            android:summary="Set USDA Zone"
+             />
 
         <com.letitgrow.gardenapp.CustomDatePreference
             android:persistent="true"
@@ -35,6 +50,6 @@
             android:defaultValue="2014-08-01"
             android:summary="Set Frost Dates"/>
 
-    
+
     </PreferenceCategory>
 </PreferenceScreen>

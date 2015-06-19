@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="calcChoices">
+        <item>Let App Decide</item>
+        <item>Override Zip Code</item>
+        <item>Override USDA Zone</item>
+        <item>Override Frost Dates</item>
+    </string-array>
+
+    <string-array name="valuesCalcChoices">
+        <item>0</item>
+        <item>1</item>
+        <item>2</item>
+        <item>3</item>
+    </string-array>
+
+</resources>
