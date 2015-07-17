@@ -92,17 +92,17 @@ public class PlantNowActivity extends Activity {
         String SELECTION;
 
         if (NowFavorites){
-            SELECTION = PlantTable.COLUMN_FAVORITE+"= 'Y'";
+            SELECTION = PlantDBHelper.COLUMN_FAVORITE+"= 'Y'";
         }
         else SELECTION = null;
 
-        String[] projection = { PlantTable.COLUMN_ID,
-                PlantTable.COLUMN_PLANT,
-                PlantTable.SPRING_BEG,
-                PlantTable.SPRING_END,
-                PlantTable.FALL_BEG,
-                PlantTable.FALL_END,
-                PlantTable.COLUMN_FAVORITE };
+        String[] projection = { PlantDBHelper.COLUMN_ID,
+                PlantDBHelper.COLUMN_PLANT,
+                PlantDBHelper.SPRING_BEG,
+                PlantDBHelper.SPRING_END,
+                PlantDBHelper.FALL_BEG,
+                PlantDBHelper.FALL_END,
+                PlantDBHelper.COLUMN_FAVORITE };
 
         Cursor cur = getContentResolver().query(plantUri, projection, SELECTION, null,
                 null);
@@ -113,25 +113,25 @@ public class PlantNowActivity extends Activity {
         if (cur != null){
             while (cur.moveToNext()) {
                 Boolean include = false;
-                String name = (cur.getString(cur.getColumnIndexOrThrow(PlantTable.COLUMN_PLANT)));
+                String name = (cur.getString(cur.getColumnIndexOrThrow(PlantDBHelper.COLUMN_PLANT)));
                 String str1, str2, str3, str4, str_id;
                 Integer int1, int2, int3, int4;
 
-                str1 = cur.getString(cur.getColumnIndexOrThrow(PlantTable.SPRING_BEG));
-                str2 = cur.getString(cur.getColumnIndexOrThrow(PlantTable.SPRING_END));
+                str1 = cur.getString(cur.getColumnIndexOrThrow(PlantDBHelper.SPRING_BEG));
+                str2 = cur.getString(cur.getColumnIndexOrThrow(PlantDBHelper.SPRING_END));
                 if (isInteger(str1))  { int1 = Integer.parseInt(str1); }
                 else int1 = 0;
                 if (isInteger(str2)){  int2 = Integer.parseInt(str2);  }
                 else int2 = 0;
 
-                str3 = cur.getString(cur.getColumnIndexOrThrow(PlantTable.FALL_BEG));
-                str4 = cur.getString(cur.getColumnIndexOrThrow(PlantTable.FALL_END));
+                str3 = cur.getString(cur.getColumnIndexOrThrow(PlantDBHelper.FALL_BEG));
+                str4 = cur.getString(cur.getColumnIndexOrThrow(PlantDBHelper.FALL_END));
                 if (isInteger(str3)){int3 = Integer.parseInt(str3);}
                 else int3 = 0;
                 if (isInteger(str4)){ int4 = Integer.parseInt(str4); }
                 else int4 = 0;
 
-                str_id = cur.getString(cur.getColumnIndexOrThrow(PlantTable.COLUMN_ID));
+                str_id = cur.getString(cur.getColumnIndexOrThrow(PlantDBHelper.COLUMN_ID));
 
                 if (inRange(today,LAST_FROST_DATE,int1, int2)){include = true; }    //SPRING
                 if (inRange(today,FIRST_FROST_DATE ,int3, int4)){ include = true; }  //FALL

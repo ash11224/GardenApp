@@ -12,6 +12,8 @@ import android.widget.NumberPicker;
 import android.preference.Preference;
 import com.letitgrow.gardenapp.CustomDatePreference;
 
+import java.util.Arrays;
+
 /**
  * Created by Ashley on 6/8/2015.
  */
@@ -91,6 +93,15 @@ public class ZonePickerPreference extends DialogPreference {
         this.value = value;
         persistInt(this.value);
         setSummary(subZones[this.value]);
+    }
+
+    public void setValueFromZoneText(String txt){
+       String uptxt = txt.toUpperCase();
+       if (Arrays.asList(subZones).contains(uptxt)){
+         int index = Arrays.asList(subZones).indexOf(uptxt);
+         setValue(index);
+        }
+
     }
 
     public int getValue() {

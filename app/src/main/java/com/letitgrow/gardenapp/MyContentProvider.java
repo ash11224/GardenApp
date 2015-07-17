@@ -20,7 +20,8 @@ public class MyContentProvider extends ContentProvider{
 
 
     // database
-    private HardCodeSQLiteHelper database;
+    //private HardCodeSQLiteHelper database;
+    private PlantDBHelper database;
 
     // used for the UriMacher
     private static final int PLANTS_ALL = 10;
@@ -45,7 +46,7 @@ public class MyContentProvider extends ContentProvider{
 
     @Override
     public boolean onCreate() {
-        database = new HardCodeSQLiteHelper(getContext());
+        database = new PlantDBHelper(getContext());
         return false;
     }
 
@@ -59,7 +60,7 @@ public class MyContentProvider extends ContentProvider{
         checkColumns(projection);
 
         // Set the table
-        queryBuilder.setTables(PlantTable.TABLE_PLANTS);
+        queryBuilder.setTables(PlantDBHelper.TABLE_PLANTS);
 
         int uriType = sURIMatcher.match(uri);
         switch (uriType) {
@@ -68,7 +69,7 @@ public class MyContentProvider extends ContentProvider{
 
             case PLANTS_ALL_ID:
                 // adding the ID to the original query
-                queryBuilder.appendWhere(PlantTable.COLUMN_ID + "="
+                queryBuilder.appendWhere(PlantDBHelper.COLUMN_ID + "="
                         + uri.getLastPathSegment());
                 break;
             default:
@@ -85,7 +86,7 @@ public class MyContentProvider extends ContentProvider{
 
     @Override
     public String getType(Uri uri) {
-        database = new HardCodeSQLiteHelper(getContext());
+        database = new PlantDBHelper(getContext());
         return null;
     }
 
@@ -97,7 +98,7 @@ public class MyContentProvider extends ContentProvider{
         long id = 0;
         switch (uriType) {
             case PLANTS_ALL:
-                id = sqlDB.insert(PlantTable.TABLE_PLANTS, null, values);
+                id = sqlDB.insert(PlantDBHelper.TABLE_PLANTS, null, values);
                 break;
             default:
                 throw new IllegalArgumentException("Unknown URI: " + uri);
@@ -113,18 +114,18 @@ public class MyContentProvider extends ContentProvider{
         int rowsDeleted = 0;
         switch (uriType) {
             case PLANTS_ALL:
-                rowsDeleted = sqlDB.delete(PlantTable.TABLE_PLANTS, selection,
+                rowsDeleted = sqlDB.delete(PlantDBHelper.TABLE_PLANTS, selection,
                         selectionArgs);
                 break;
             case PLANTS_ALL_ID:
                 String id = uri.getLastPathSegment();
                 if (TextUtils.isEmpty(selection)) {
-                    rowsDeleted = sqlDB.delete(PlantTable.TABLE_PLANTS,
-                            PlantTable.COLUMN_ID + "=" + id,
+                    rowsDeleted = sqlDB.delete(PlantDBHelper.TABLE_PLANTS,
+                            PlantDBHelper.COLUMN_ID + "=" + id,
                             null);
                 } else {
-                    rowsDeleted = sqlDB.delete(PlantTable.TABLE_PLANTS,
-                            PlantTable.COLUMN_ID + "=" + id
+                    rowsDeleted = sqlDB.delete(PlantDBHelper.TABLE_PLANTS,
+                            PlantDBHelper.COLUMN_ID + "=" + id
                                     + " and " + selection,
                             selectionArgs);
                 }
@@ -144,7 +145,7 @@ public class MyContentProvider extends ContentProvider{
         int rowsUpdated = 0;
         switch (uriType) {
             case PLANTS_ALL:
-                rowsUpdated = sqlDB.update(PlantTable.TABLE_PLANTS,
+                rowsUpdated = sqlDB.update(PlantDBHelper.TABLE_PLANTS,
                         values,
                         selection,
                         selectionArgs);
@@ -152,14 +153,14 @@ public class MyContentProvider extends ContentProvider{
             case PLANTS_ALL_ID:
                 String id = uri.getLastPathSegment();
                 if (TextUtils.isEmpty(selection)) {
-                    rowsUpdated = sqlDB.update(PlantTable.TABLE_PLANTS,
+                    rowsUpdated = sqlDB.update(PlantDBHelper.TABLE_PLANTS,
                             values,
-                            PlantTable.COLUMN_ID + "=" + id,
+                            PlantDBHelper.COLUMN_ID + "=" + id,
                             null);
                 } else {
-                    rowsUpdated = sqlDB.update(PlantTable.TABLE_PLANTS,
+                    rowsUpdated = sqlDB.update(PlantDBHelper.TABLE_PLANTS,
                             values,
-                            PlantTable.COLUMN_ID + "=" + id
+                            PlantDBHelper.COLUMN_ID + "=" + id
                                     + " and "
                                     + selection,
                             selectionArgs);
@@ -173,20 +174,20 @@ public class MyContentProvider extends ContentProvider{
     }
 
     private void checkColumns(String[] projection) {
-            String[] available = {  PlantTable.COLUMN_ID,
-                    PlantTable.COLUMN_PLANT,
-                    PlantTable.COLUMN_SPACING,
-                    PlantTable.COLUMN_DEPTH,
-                    PlantTable.COLUMN_COMPANIONS,
-                    PlantTable.COLUMN_NUISANCES,
-                    PlantTable.COLUMN_HELPERS,
-                    PlantTable.COLUMN_PESTS,
-                    PlantTable.SPRING_BEG,
-                    PlantTable.SPRING_END,
-                    PlantTable.FALL_BEG,
-                    PlantTable.FALL_END,
-                    PlantTable.PIC_NAME,
-                    PlantTable.COLUMN_FAVORITE
+            String[] available = {  PlantDBHelper.COLUMN_ID,
+                    PlantDBHelper.COLUMN_PLANT,
+                    PlantDBHelper.COLUMN_SPACING,
+                    PlantDBHelper.COLUMN_DEPTH,
+                    PlantDBHelper.COLUMN_COMPANIONS,
+                    PlantDBHelper.COLUMN_NUISANCES,
+                    PlantDBHelper.COLUMN_HELPERS,
+                    PlantDBHelper.COLUMN_PESTS,
+                    PlantDBHelper.SPRING_BEG,
+                    PlantDBHelper.SPRING_END,
+                    PlantDBHelper.FALL_BEG,
+                    PlantDBHelper.FALL_END,
+                    PlantDBHelper.PIC_NAME,
+                    PlantDBHelper.COLUMN_FAVORITE
             };
             if (projection != null) {
                 HashSet<String> requestedColumns = new HashSet<String>(Arrays.asList(projection));

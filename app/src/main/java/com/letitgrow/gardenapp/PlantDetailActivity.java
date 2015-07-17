@@ -95,25 +95,25 @@ public class PlantDetailActivity extends Activity{
         double num1, num2;
         int int1, int2;
 
-        String[] projection = { PlantTable.COLUMN_PLANT,
-                PlantTable.COLUMN_SPACING,
-                PlantTable.COLUMN_DEPTH,
-                PlantTable.COLUMN_COMPANIONS,
-                PlantTable.COLUMN_NUISANCES,
-                PlantTable.COLUMN_HELPERS,
-                PlantTable.COLUMN_PESTS,
-                PlantTable.SPRING_BEG,
-                PlantTable.SPRING_END,
-                PlantTable.FALL_BEG,
-                PlantTable.FALL_END,
-                PlantTable.PIC_NAME,
-                PlantTable.COLUMN_FAVORITE };
+        String[] projection = { PlantDBHelper.COLUMN_PLANT,
+                PlantDBHelper.COLUMN_SPACING,
+                PlantDBHelper.COLUMN_DEPTH,
+                PlantDBHelper.COLUMN_COMPANIONS,
+                PlantDBHelper.COLUMN_NUISANCES,
+                PlantDBHelper.COLUMN_HELPERS,
+                PlantDBHelper.COLUMN_PESTS,
+                PlantDBHelper.SPRING_BEG,
+                PlantDBHelper.SPRING_END,
+                PlantDBHelper.FALL_BEG,
+                PlantDBHelper.FALL_END,
+                PlantDBHelper.PIC_NAME,
+                PlantDBHelper.COLUMN_FAVORITE };
         Cursor cursor = getContentResolver().query(uri, projection, null, null,
                 null);
         if (cursor != null) {
             cursor.moveToFirst();
 
-            String fav = cursor.getString(cursor.getColumnIndexOrThrow(PlantTable.COLUMN_FAVORITE));
+            String fav = cursor.getString(cursor.getColumnIndexOrThrow(PlantDBHelper.COLUMN_FAVORITE));
             ToggleButton  tglbtn = (ToggleButton)findViewById(R.id.toggleButton);
 
             if (fav.contains("N")) {
@@ -125,13 +125,13 @@ public class PlantDetailActivity extends Activity{
 
 
             PlantTitleText.setText(cursor.getString(cursor
-                    .getColumnIndexOrThrow(PlantTable.COLUMN_PLANT)));
+                    .getColumnIndexOrThrow(PlantDBHelper.COLUMN_PLANT)));
             FavoriteLabel.setText("Favorite: ");
 
             PlantSpacingLabel.setText("Plant Spacing: ");
             PerSquareFootLabel.setText("Plants per Sq Ft: ");
             str = cursor.getString(cursor
-                    .getColumnIndexOrThrow(PlantTable.COLUMN_SPACING));
+                    .getColumnIndexOrThrow(PlantDBHelper.COLUMN_SPACING));
             if (str == null){
                 str = "No information available";
                 PlantSpacingText.setText(String.format("%s", str));
@@ -146,14 +146,14 @@ public class PlantDetailActivity extends Activity{
 
             PlantDepthLabel.setText("Seed Depth: ");
             str = cursor.getString(cursor
-                    .getColumnIndexOrThrow(PlantTable.COLUMN_DEPTH));
+                    .getColumnIndexOrThrow(PlantDBHelper.COLUMN_DEPTH));
             PlantDepthText.setText(String.format("%s inches", str));
 
             SpringPlantingLabel.setText("Spring Planting: ");
             str1 = cursor.getString(cursor
-                    .getColumnIndexOrThrow(PlantTable.SPRING_BEG));
+                    .getColumnIndexOrThrow(PlantDBHelper.SPRING_BEG));
             str2 = cursor.getString(cursor
-                    .getColumnIndexOrThrow(PlantTable.SPRING_END));
+                    .getColumnIndexOrThrow(PlantDBHelper.SPRING_END));
             if (isInteger(str1)){
                 int1 = Integer.parseInt(str1);
             }
@@ -171,9 +171,9 @@ public class PlantDetailActivity extends Activity{
 
             FallPlantingLabel.setText("Fall Planting: ");
             str1 = cursor.getString(cursor
-                    .getColumnIndexOrThrow(PlantTable.FALL_BEG));
+                    .getColumnIndexOrThrow(PlantDBHelper.FALL_BEG));
             str2 = cursor.getString(cursor
-                    .getColumnIndexOrThrow(PlantTable.FALL_END));
+                    .getColumnIndexOrThrow(PlantDBHelper.FALL_END));
             if (isInteger(str1)){
                 int1 = Integer.parseInt(str1);
             }
@@ -191,22 +191,22 @@ public class PlantDetailActivity extends Activity{
 
             CompanionsLabel.setText("Companions: ");
             str = cursor.getString(cursor
-                    .getColumnIndexOrThrow(PlantTable.COLUMN_COMPANIONS));
+                    .getColumnIndexOrThrow(PlantDBHelper.COLUMN_COMPANIONS));
             CompanionsText.setText(String.format("%s", str));
 
             NuisancesLabel.setText("Nuisances: ");
             str = cursor.getString(cursor
-                    .getColumnIndexOrThrow(PlantTable.COLUMN_NUISANCES));
+                    .getColumnIndexOrThrow(PlantDBHelper.COLUMN_NUISANCES));
             NuisancesText.setText(String.format("%s", str));
 
             HelpersLabel.setText("Helpers: ");
             str = cursor.getString(cursor
-                    .getColumnIndexOrThrow(PlantTable.COLUMN_HELPERS));
+                    .getColumnIndexOrThrow(PlantDBHelper.COLUMN_HELPERS));
             HelpersText.setText(String.format("%s", str));
 
             PestsLabel.setText("Pests: ");
             str = cursor.getString(cursor
-                    .getColumnIndexOrThrow(PlantTable.COLUMN_PESTS));
+                    .getColumnIndexOrThrow(PlantDBHelper.COLUMN_PESTS));
             PestsText.setText(String.format("%s", str));
 
             //str = cursor.getString(cursor
@@ -224,9 +224,9 @@ public class PlantDetailActivity extends Activity{
         boolean on = ((ToggleButton) view).isChecked();
         ContentValues values = new ContentValues();
         if (on) {
-            values.put(PlantTable.COLUMN_FAVORITE, "Y");
+            values.put(PlantDBHelper.COLUMN_FAVORITE, "Y");
         } else {
-            values.put(PlantTable.COLUMN_FAVORITE, "N");
+            values.put(PlantDBHelper.COLUMN_FAVORITE, "N");
         }
 
         getContentResolver().update(plantUri, values, null, null);

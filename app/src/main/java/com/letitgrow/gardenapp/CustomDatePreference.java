@@ -106,18 +106,20 @@ public class CustomDatePreference extends DialogPreference implements
     public void setDate(String dateString) {
         this.dateString = dateString;
         persistDate(this.dateString);
+       // setSummary();
     }
 
     public Calendar getDate() {
         try {
-        Date date = formatter().parse(defaultValue());
-        Calendar cal = Calendar.getInstance();
-        cal.setTime(date);
-        return cal;
+            Date date = formatter().parse(defaultValue());
+            Calendar cal = Calendar.getInstance();
+            cal.setTime(date);
+            return cal;
         } catch (java.text.ParseException e) {
-        return defaultCalendar();
+            return defaultCalendar();
         }
     }
+
 
 
     public static SimpleDateFormat formatter() {
@@ -149,7 +151,7 @@ public class CustomDatePreference extends DialogPreference implements
         return formatter().format(defaultCalendar().getTime());
     }
 
-    private String defaultValue() {
+    public String defaultValue() {
         if (this.dateString == null)
         setDate(defaultCalendarString());
         return this.dateString;

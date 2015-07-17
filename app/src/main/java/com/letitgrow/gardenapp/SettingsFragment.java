@@ -2,6 +2,7 @@ package com.letitgrow.gardenapp;
 
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.preference.EditTextPreference;
 import android.preference.ListPreference;
@@ -17,13 +18,15 @@ import com.letitgrow.gardenapp.CustomDatePreference;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import java.util.Date;
 
 /**
  * Created by Ashley on 5/25/2015.
  */
 public class SettingsFragment extends PreferenceFragment
  implements SharedPreferences.OnSharedPreferenceChangeListener {
-
+    //private ZipDataSource datasource;
+    //private ZoneDataSource zdatasource;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -44,33 +47,20 @@ public class SettingsFragment extends PreferenceFragment
             lp.setValue("Let App Decide");
         }
 
-        switch (Integer.parseInt(lp.getValue())) {
-             case 0: ffd_p.setEnabled(false);
-                   lfd_p.setEnabled(false);
-                    ep.setEnabled(false);
-                    zpp.setEnabled(false);
-                 break;
-             case 1: ffd_p.setEnabled(false);
-                 lfd_p.setEnabled(false);
-                 ep.setEnabled(true);
-                    zpp.setEnabled(false);
-                 break;
-                case 2: ffd_p.setEnabled(false);
-                    lfd_p.setEnabled(false);
-                    ep.setEnabled(false);
-                    zpp.setEnabled(true);
-                    break;
-                case 3: ffd_p.setEnabled(true);
-                    lfd_p.setEnabled(true);
-                    ep.setEnabled(false);
-                    zpp.setEnabled(false);
-                    break;
+        setDisabledPrefs(Integer.parseInt(lp.getValue()),ffd_p,lfd_p, zpp, ep);
 
-            }
 
         if (lp.getSummary().toString().equals("How frost dates are set")){
             lp.setSummary(lp.getEntry());
         }
+
+        if (!ep.getText().equals("99999")){
+            ep.setSummary(ep.getText());
+        }
+
+        String str1 = ffd_p.getDate().toString();
+        String str2 = ffd_p.getSummary().toString();
+        String str3 = str1;
 
 
         if (ffd_p.getSummary().toString().equals("Set Frost Dates")){
@@ -116,86 +106,92 @@ public class SettingsFragment extends PreferenceFragment
 
         if (key.equals("calc_pref")) {
             lp.setSummary(lp.getEntry());
-            switch (Integer.parseInt(lp.getValue())) {
-                case 0: ffd_p.setEnabled(false);
-                    lfd_p.setEnabled(false);
-                    ep.setEnabled(false);
-                    zpp.setEnabled(false);
-                    break;
-                case 1: ffd_p.setEnabled(false);
-                    lfd_p.setEnabled(false);
-                    ep.setEnabled(true);
-                    zpp.setEnabled(false);
-                    break;
-                case 2: ffd_p.setEnabled(false);
-                    lfd_p.setEnabled(false);
-                    ep.setEnabled(false);
-                    zpp.setEnabled(true);
-                    break;
-                case 3: ffd_p.setEnabled(true);
-                    lfd_p.setEnabled(true);
-                    ep.setEnabled(false);
-                    zpp.setEnabled(false);
-                    break;
-
-            }
+            setDisabledPrefs(Integer.parseInt(lp.getValue()),ffd_p,lfd_p, zpp, ep);
         }
 
         if (key.equals("zip")){
-            int aZip = Integer.parseInt(ep.getText());
-            ep.setSummary(ep.getText());
-            switch (aZip){
-                case 88888:
-                    zpp.setValue(14);
-                    break;
-                case 77777:
-                    zpp.setValue(12);
-                    break;
-                case 66666:
-                    //Toast toast = Toast.makeText(this, "Invalid Zip", Toast.LENGTH_SHORT);
-                    //toast.show();
-                    break;
+          int aZip = Integer.parseInt(ep.getText());
+          //ep.setSummary(ep.getText());
 
-            }
+
+
+          ZipDataSource datasource = new ZipDataSource(getActivity());
+          datasource.open();
+
+          if (datasource.ZipExists(aZip)){
+              ep.setText(String.valueOf(aZip));
+              ep.setSummary(String.valueOf(aZip));
+              zpp.setValueFromZoneText(datasource.GetZone(aZip));
+          }
+          else {
+             Toast.makeText(getActivity(), "Invalid Zip", Toast.LENGTH_SHORT).show();
+          }
 
         }
 
         if (key.equals("zone")) {
-            switch (zpp.getValue()) {
-                case 0: case 1:
-                    ffd_p.setDate("2015.07.15");
-                    lfd_p.setDate("2015.06.15");
-                    break;
-                case 2: case 3: case 4: case 5:
-                    ffd_p.setDate("2015.08.15");
-                    lfd_p.setDate("2015.05.15");
-                    break;
-                case 6: case 7:
-                    ffd_p.setDate("2015.09.15");
-                    lfd_p.setDate("2015.05.15");
-                    break;
-                case 8: case 9: case 10:
-                case 11: case 12: case 13:
-                    ffd_p.setDate("2015.10.15");
-                    lfd_p.setDate("2015.04.15");
-                    break;
-                case 14: case 15:
-                    ffd_p.setDate("2015.11.15");
-                    lfd_p.setDate("2015.03.15");
-                    break;
-                case 16: case 17:
-                    ffd_p.setDate("2015.12.15");
-                    lfd_p.setDate("2015.02.15");
-                    break;
-                case 18: case 19:
-                    ffd_p.setDate("2015.12.15");
-                    lfd_p.setDate("2015.01.31");
-                    break;
-            }
+          String aZone = zpp.getDisplayValue();
+
+          ZoneDataSource zdatasource = new ZoneDataSource(getActivity());
+          zdatasource.open();
+
+          String aDate =  zdatasource.GetFFD(aZone);
+
+          ffd_p.setDate(aDate);
+          lfd_p.setDate(zdatasource.GetLFD(aZone));
+
         }
+
+     /*   if (key.equals("ffd")){
+          //  String ffd_str = mySharedPreferences.getString("ffd", "");
+           // String lfd_str = mySharedPreferences.getString("lfd", "");
+            DateFormat printFormat = new SimpleDateFormat("MMMM dd");
+            Date aDate = ffd_p.getDate().getTime();
+            String dte = printFormat.format(aDate);
+            ffd_p.setSummary(dte);
+
+        }
+
+        if (key.equals("lfd")){
+            DateFormat printFormat = new SimpleDateFormat("MMMM dd, yyyy");
+            Calendar theDate = lfd_p.getDate();
+            String dte = printFormat.format(theDate);
+            lfd_p.setSummary(dte);
+
+        }*/
     }
+
 
     private void adjustPreferences(int selection){
 
     }
+    private void setDisabledPrefs(int num, CustomDatePreference aFFD, CustomDatePreference aLFD,
+                                  ZonePickerPreference aZPP, EditTextPreference aEP){
+        switch (num) {
+            case 0: aFFD.setEnabled(false);
+                    aLFD.setEnabled(false);
+                    aEP.setEnabled(false);
+                    aZPP.setEnabled(false);
+                    break;
+            case 1: aFFD.setEnabled(false);
+                    aLFD.setEnabled(false);
+                    aEP.setEnabled(true);
+                    aZPP.setEnabled(false);
+                    break;
+            case 2: aFFD.setEnabled(false);
+                    aLFD.setEnabled(false);
+                    aEP.setEnabled(false);
+                    aZPP.setEnabled(true);
+                    break;
+            case 3: aFFD.setEnabled(true);
+                    aLFD.setEnabled(true);
+                    aEP.setEnabled(false);
+                    aZPP.setEnabled(false);
+                    break;
+        }
+
+    }
+
+    //ListPreference lp = (ListPreference) findPreference("calc_pref");
+
 }

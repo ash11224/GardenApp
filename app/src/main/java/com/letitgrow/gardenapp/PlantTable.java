@@ -102,9 +102,9 @@ public class PlantTable {
     public static void onUpgrade(SQLiteDatabase database, int oldVersion,
                                  int newVersion) {
         Log.w(PlantTable.class.getName(), "Upgrading database from version "
-                + oldVersion + " to " + newVersion
-                + ", which will destroy all old data");
-        database.execSQL("DROP TABLE IF EXISTS " + TABLE_PLANTS);
-        onCreate(database);
+            + oldVersion + " to " + newVersion
+    + ", which will destroy all old data");
+    database.execSQL("DROP TABLE IF EXISTS " + TABLE_PLANTS);
+    onCreate(database);
     }
 }
