@@ -58,14 +58,14 @@ public class MainActivity extends ListActivity implements
     ///Location API Variables
     protected boolean mAddressRequested;
 
-   // GoogleApiClient mGoogleApiClient;
+    GoogleApiClient mGoogleApiClient;
     //TextView mLatitudeText;
     //TextView mLongitudeText;
 
-  //  protected Location mLastLocation;
-  //  private AddressResultReceiver mResultReceiver;
+    protected Location mLastLocation;
+    private AddressResultReceiver mResultReceiver;
 
- //   protected String mAddressOutput;
+    protected String mAddressOutput;
    // protected TextView mLocationAddressTextView; //
    protected static final String TAG = "main-activity";
 
@@ -97,14 +97,14 @@ public class MainActivity extends ListActivity implements
 
         //  if (checkIfGooglePlayServicesAreAvailable()) {
         //Get Access to the google service api
-        //     buildGoogleApiClient();
-         /*   mGoogleApiClient.connect();
+             buildGoogleApiClient();
+            mGoogleApiClient.connect();
             if (mGoogleApiClient.isConnected() && mLastLocation != null) {
                 startIntentService();
             }
             mAddressRequested = true;
             //  updateUIWidgets();
-        }*/
+       // }
 
         // }
     }
@@ -296,7 +296,7 @@ public class MainActivity extends ListActivity implements
     ////////////////////////////////Location API Related///////////////
     @Override
     public void onConnected(Bundle bundle) {
-    /*    mLastLocation = LocationServices.FusedLocationApi.getLastLocation(
+        mLastLocation = LocationServices.FusedLocationApi.getLastLocation(
                 mGoogleApiClient);  //retrieves last location from API
         if (mLastLocation != null) {
 
@@ -314,7 +314,7 @@ public class MainActivity extends ListActivity implements
                 startIntentService();
             }
 
-        }*/
+        }
 
     }
 /*
@@ -338,7 +338,7 @@ public class MainActivity extends ListActivity implements
         Log.i(TAG, "Connection suspended");
         //mGoogleApiClient.connect();
     }
-/*
+
 
     protected synchronized void buildGoogleApiClient() {
         //Connects to GooglePlay API, adds Locations services to API
@@ -352,6 +352,7 @@ public class MainActivity extends ListActivity implements
     protected void startIntentService() {
         //starts intent JUST for the fetch address service
         Intent intent = new Intent(this, FetchAddressIntentService.class);
+        mResultReceiver = new AddressResultReceiver(new Handler());
         intent.putExtra(Constants.RECEIVER, mResultReceiver);
         intent.putExtra(Constants.LOCATION_DATA_EXTRA, mLastLocation);
         startService(intent);

@@ -40,11 +40,11 @@ public class FetchAddressIntentService extends IntentService{
         Geocoder geocoder = new Geocoder(this, Locale.getDefault());
         String errorMessage = "";
 
+        mReceiver = intent.getParcelableExtra(Constants.RECEIVER);
+
         // Get the location passed to this service through an extra.
         Location location = intent.getParcelableExtra(
                 Constants.LOCATION_DATA_EXTRA);
-
-
 
         List<Address> addresses = null;
 
@@ -95,6 +95,6 @@ public class FetchAddressIntentService extends IntentService{
         Bundle bundle = new Bundle();
         bundle.putString(Constants.RESULT_DATA_KEY, message);
 
-      //  mReceiver.send(resultCode, bundle);
+        mReceiver.send(resultCode, bundle);
     }
 }
