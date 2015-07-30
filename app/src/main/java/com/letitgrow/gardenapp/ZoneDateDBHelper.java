@@ -25,7 +25,7 @@ public class ZoneDateDBHelper extends SQLiteOpenHelper {
     public static final String COLUMN_FFD = "ffd";
     public static final String COLUMN_LFD = "lfd";
     public static final String TABLE_DATES = "zonedates";
-    private static final int DATABASE_VERSION = 1;
+    private static final int DATABASE_VERSION = 4;
 
     private SQLiteDatabase myDataBase;
 

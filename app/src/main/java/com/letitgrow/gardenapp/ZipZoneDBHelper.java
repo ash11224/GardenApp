@@ -24,7 +24,7 @@ public class ZipZoneDBHelper extends SQLiteOpenHelper {
     public static final String COLUMN_ZIP = "zip";
     public static final String COLUMN_ZONE = "zones";
     public static final String TABLE_ZONES = "zipzones";
-    private static final int DATABASE_VERSION = 5;
+    private static final int DATABASE_VERSION = 6;
 
     private SQLiteDatabase myDataBase;
 

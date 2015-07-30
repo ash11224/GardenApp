@@ -1,12 +1,15 @@
 package com.letitgrow.gardenapp;
 
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.app.LoaderManager;
 import android.content.ContentValues;
 import android.content.Context;
 import android.content.CursorLoader;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.Loader;
+import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.database.SQLException;
 import android.database.sqlite.SQLiteDatabase;
@@ -16,6 +19,8 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.ResultReceiver;
+import android.preference.EditTextPreference;
+import android.preference.ListPreference;
 import android.preference.PreferenceManager;
 import android.util.Log;
 import android.view.ContextMenu;
@@ -38,9 +43,12 @@ import com.google.android.gms.common.GooglePlayServicesUtil;
 import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.common.api.GoogleApiClient.Builder;
 import com.google.android.gms.location.LocationServices;
+import com.letitgrow.gardenapp.ZonePickerPreference;
 
 
 import java.io.IOException;
+import java.util.Arrays;
+import java.util.List;
 
 public class MainActivity extends ListActivity implements
         GoogleApiClient.ConnectionCallbacks,
@@ -78,35 +86,71 @@ public class MainActivity extends ListActivity implements
         super.onCreate(savedInstanceState);
         setContentView(R.layout.plant_list);
 
-
         this.getListView().setDividerHeight(2);
-        ListFavorites = false;
+        BuildStaticDBs();
+
         fillData();
         registerForContextMenu(getListView());
         int resourceID = R.layout.preferences;
         PreferenceManager.setDefaultValues(this, resourceID, false);
 
-        //     mResultReceiver = new AddressResultReceiver(new Handler());
+        SharedPreferences prefs =
+                PreferenceManager.getDefaultSharedPreferences(this);
+        ListFavorites = prefs.getBoolean("ShowFavs", false);
 
-        BuildStaticDBs();
+        SharedPreferences.OnSharedPreferenceChangeListener listener = new SharedPreferences.OnSharedPreferenceChangeListener() {
+            public void onSharedPreferenceChanged(SharedPreferences prefs, String key) {
+                if (key.equals("zip")){
 
-        //     mAddressRequested = false;
-        //     mAddressOutput = "";
-        //    updateValuesFromBundle(savedInstanceState);
-        //   buildGoogleApiClient();
+                    int aZip = Integer.parseInt(prefs.getString("zip", ""));
+                    SharedPreferences.Editor editor = prefs.edit();
 
-        //  if (checkIfGooglePlayServicesAreAvailable()) {
-        //Get Access to the google service api
-             buildGoogleApiClient();
-            mGoogleApiClient.connect();
-            if (mGoogleApiClient.isConnected() && mLastLocation != null) {
-                startIntentService();
+                    editor.putString("calc_pref","0");
+                    ZipDataSource datasource = new ZipDataSource(MainActivity.this);
+                    datasource.open();
+
+                    if (datasource.ZipExists(aZip)){
+                        String aZone = datasource.GetZone(aZip).toUpperCase();
+
+                        List<String> myZones = null;
+
+                        if (myZones == null) {
+                            myZones = Arrays.asList((getResources().getStringArray(R.array.zoneArray)));
+                        }
+                        int value = myZones.indexOf(aZone);
+
+                        editor.putInt("zone",value);
+
+                        ZoneDataSource zdatasource = new ZoneDataSource(MainActivity.this);
+                        zdatasource.open();
+
+                        String aFFD = zdatasource.GetFFD(aZone);
+                        String aLFD = zdatasource.GetLFD(aZone);
+
+                        editor.putString("ffd",aFFD);
+                        editor.putString("lfd",aLFD);
+
+                        editor.commit();
+
+                    }
+
+                    
+                }
             }
-            mAddressRequested = true;
-            //  updateUIWidgets();
-       // }
+        };
 
-        // }
+        prefs.registerOnSharedPreferenceChangeListener(listener);
+
+
+
+
+        buildGoogleApiClient();
+        mGoogleApiClient.connect();
+        if (mGoogleApiClient.isConnected() && mLastLocation != null) {
+          startIntentService();
+        }
+        mAddressRequested = true;
+
     }
 
     // create the menu based on the XML defintion
@@ -147,10 +191,10 @@ public class MainActivity extends ListActivity implements
         return super.onContextItemSelected(item);
     }
 
-    private void createTodo() {
+  /*  private void createTodo() {
         Intent i = new Intent(this, PlantDetailActivity.class);
         startActivity(i);
-    }
+    }*/
 
     // Opens the second activity if an entry is clicked
     @Override
@@ -179,21 +223,6 @@ public class MainActivity extends ListActivity implements
     }
 
     private void BuildStaticDBs(){
-        PlantDBHelper myPDHelper;
-        myPDHelper = new PlantDBHelper(this);
-
-        try {
-            myPDHelper.createDataBase();
-        } catch (IOException ioe) {
-
-            throw new Error("Unable to create database");
-        }
-        try {
-            myPDHelper.openDataBase();
-        }catch(SQLException sqle){
-            throw sqle;
-        }
-
 
         ZipZoneDBHelper myZZHelper;
         myZZHelper = new ZipZoneDBHelper(this);
@@ -224,10 +253,28 @@ public class MainActivity extends ListActivity implements
         }catch(SQLException sqle){
             throw sqle;
         }
+        PlantDBHelper myPDHelper;
+        myPDHelper = new PlantDBHelper(this);
+
+        try {
+            myPDHelper.createDataBase();
+        } catch (IOException ioe) {
+
+            throw new Error("Unable to create database");
+        }
+        try {
+            myPDHelper.openDataBase();
+        }catch(SQLException sqle){
+            throw sqle;
+        }
+
+
+
 
     }
 
     public void onPlantNowClicked(View view){
+
         Intent i = new Intent(this, PlantNowActivity.class);
         Uri todoUri = Uri.parse(MyContentProvider.CONTENT_URI + "/");
         i.putExtra(MyContentProvider.CONTENT_TYPE, todoUri);
@@ -238,25 +285,23 @@ public class MainActivity extends ListActivity implements
     public void onMainToggleClicked(View view) {
         // Is the toggle on?
         boolean on = ((ToggleButton) view).isChecked();
+
+        final SharedPreferences prefs =
+                PreferenceManager.getDefaultSharedPreferences(MainActivity.this);
+
+        SharedPreferences.Editor editor = prefs.edit();
+
         ContentValues values = new ContentValues();
         if (on) {
-           ListFavorites = true;
+            ListFavorites = true;
+
         } else {
-           ListFavorites = false;
+            ListFavorites = false;
         }
+        editor.putBoolean("ShowFavs", ListFavorites);
+        editor.commit();
 
         getLoaderManager().restartLoader(0, null, this);
-    }
-
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data){
-        super.onActivityResult(requestCode, resultCode, data);
-
-        if (resultCode == Activity.RESULT_OK) {
-            ListFavorites = data.getBooleanExtra("favNowPushed", false);
-            ToggleButton aTglBtn = (ToggleButton) findViewById(R.id.mainToggleButton);
-            aTglBtn.setChecked(ListFavorites);
-        }
 
     }
 
@@ -272,16 +317,26 @@ public class MainActivity extends ListActivity implements
     public Loader<Cursor> onCreateLoader(int id, Bundle args) {
         String SELECTION;
 
+        SharedPreferences prefs =
+                PreferenceManager.getDefaultSharedPreferences(this);
+        ListFavorites = prefs.getBoolean("ShowFavs", false);
+
+        ToggleButton aTglBtn = (ToggleButton) findViewById(R.id.mainToggleButton);
+        aTglBtn.setChecked(ListFavorites);
+
         if (ListFavorites){
             SELECTION = PlantDBHelper.COLUMN_FAVORITE+"= 'Y'";
         }
         else SELECTION = null;
 
         String[] projection = { PlantDBHelper.COLUMN_ID, PlantDBHelper.COLUMN_PLANT };
+
+        String SORT = PlantDBHelper.COLUMN_PLANT;
         CursorLoader cursorLoader = new CursorLoader(this,
-                MyContentProvider.CONTENT_URI, projection, SELECTION, null, null);
+                MyContentProvider.CONTENT_URI, projection, SELECTION, null, SORT);
         return cursorLoader;
     }
+
 
     @Override
     public void onLoadFinished(Loader<Cursor> loader, Cursor data) {
@@ -289,9 +344,29 @@ public class MainActivity extends ListActivity implements
     }
 
     @Override
-    public void onLoaderReset(Loader<Cursor> loader) {
+         public void onLoaderReset(Loader<Cursor> loader) {
         // data is not available anymore, delete reference
         adapter.swapCursor(null);
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        // data is not available anymore, delete reference
+        getLoaderManager().restartLoader(0, null, this);
+    }
+    @Override
+    protected void onStop() {
+        Log.w(TAG, "App stopped");
+
+        super.onStop();
+    }
+
+    @Override
+    protected void onDestroy() {
+        Log.w(TAG, "App destoryed");
+
+        super.onDestroy();
     }
     ////////////////////////////////Location API Related///////////////
     @Override
@@ -317,16 +392,6 @@ public class MainActivity extends ListActivity implements
         }
 
     }
-/*
-    @Override
-    public void onSaveInstanceState(Bundle savedInstanceState) {
-        // Save whether the address has been requested.
-        savedInstanceState.putBoolean(ADDRESS_REQUESTED_KEY, mAddressRequested);
-
-        // Save the address string.
-        savedInstanceState.putString(LOCATION_ADDRESS_KEY, mAddressOutput);
-        super.onSaveInstanceState(savedInstanceState);
-    } */
 
     @Override
     public void onConnectionFailed(ConnectionResult connectionResult) {
@@ -357,32 +422,6 @@ public class MainActivity extends ListActivity implements
         intent.putExtra(Constants.LOCATION_DATA_EXTRA, mLastLocation);
         startService(intent);
     }
-/*
-    private boolean checkIfGooglePlayServicesAreAvailable() {
-        int errorCode = GooglePlayServicesUtil.isGooglePlayServicesAvailable(this);
-        if (errorCode != ConnectionResult.SUCCESS) {
-            //GooglePlayServicesUtil.getErrorDialog(errorCode, (RecentSightings) this, 0).show();
-            return false;
-        }
-        return true;
-    }
-
-
-
-    private void updateValuesFromBundle(Bundle savedInstanceState) {
-        if (savedInstanceState != null) {
-            // Check savedInstanceState to see if the address was previously requested.
-            if (savedInstanceState.keySet().contains(ADDRESS_REQUESTED_KEY)) {
-                mAddressRequested = savedInstanceState.getBoolean(ADDRESS_REQUESTED_KEY);
-            }
-            // Check savedInstanceState to see if the location address string was previously found
-            // and stored in the Bundle. If it was found, display the address string in the UI.
-            if (savedInstanceState.keySet().contains(LOCATION_ADDRESS_KEY)) {
-                mAddressOutput = savedInstanceState.getString(LOCATION_ADDRESS_KEY);
-               // displayAddressOutput();
-            }
-        }
-    }  */
 
     class AddressResultReceiver extends ResultReceiver {
         public AddressResultReceiver(Handler handler) {
@@ -393,9 +432,34 @@ public class MainActivity extends ListActivity implements
         @Override
         protected void onReceiveResult(int resultCode, Bundle resultData) {
 
-            String mAddressOutput = resultData.getString(Constants.RESULT_DATA_KEY);
+            final String mAddressOutput = resultData.getString(Constants.RESULT_DATA_KEY);
+            final SharedPreferences prefs =
+                    PreferenceManager.getDefaultSharedPreferences(MainActivity.this);
+            final String allPrefs = prefs.getString("zip", "");
 
-            String blah = "blah";
+            if (!allPrefs.equals(mAddressOutput)){
+                AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
+                builder.setPositiveButton(R.string.ok, new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int id) {
+
+                        SharedPreferences.Editor editor = prefs.edit();
+                        editor.putString("zip",mAddressOutput);
+
+                        editor.commit();
+                    }
+                });
+                builder.setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int id) {
+                        // do nothing
+                    }
+                });
+                builder.setMessage(mAddressOutput+" has been detected as your zipcode.  Can we use it for your frost dates?")
+                        .setTitle(R.string.dialog_title);
+                AlertDialog dialog = builder.create();
+                dialog.show();
+
+            }
+
 
         }
     }

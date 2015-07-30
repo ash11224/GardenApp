@@ -54,6 +54,16 @@
     <string name="address_found">Address Found</string>
     <string name="no_geocoder_available">No Geocoder present</string>
 
+    <string name="dialog_message">Zip Code Detected</string>
+    <string name="dialog_title">Zip Code Detected</string>
+    <string name="ok">OK</string>
+    <string name="cancel">Cancel</string>
+    <string name="FavYes">\uf004</string>
+    <string name="FavNo">\uf08a</string>
+    <string name="Cal">\uf073</string>
+    <string name="Cog">\uf085</string>
+
+
 
 
 </resources>

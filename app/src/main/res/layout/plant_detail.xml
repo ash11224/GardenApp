@@ -9,23 +9,11 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="4dp"
         android:layout_marginLeft="4dp"
-        android:layout_marginTop="6dp"
+        android:layout_marginTop="@dimen/plant_title_margin"
         android:lines="1"
         android:textSize="24sp"
-        >
-    </TextView>
-
-    <TextView
-        android:id="@+id/plant_label_favorite"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="4dp"
-        android:layout_marginLeft="4dp"
-        android:lines="1"
-        android:layout_below="@id/plant_text_name"
-        android:layout_alignParentStart="true"
-        android:layout_alignParentLeft="true"
-        android:textSize="24sp"
+        android:paddingLeft="3dp"
+        android:textColor="@color/myGray"
         >
     </TextView>
 
@@ -33,43 +21,48 @@
         android:id="@+id/toggleButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textSize="16sp"
-        android:textOn="YES"
-        android:textOff="NO"
-        android:layout_below="@id/plant_text_name"
+        android:textSize="20sp"
+        android:textOn= "@string/FavYes"
+        android:textOff="@string/FavNo"
+        android:textColor="@color/myGray"
         android:layout_alignParentEnd="true"
         android:layout_alignParentRight="true"
-        android:onClick="onToggleClicked"/>
+        android:onClick="onToggleClicked"
+        android:background="@android:color/transparent"
+        />
 
     <TextView
+        android:layout_marginTop="@dimen/plant_title_margin"
+        android:textStyle="bold"
         android:id="@+id/plant_label_spacing"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginStart="4dp"
         android:layout_marginLeft="4dp"
         android:lines="1"
-        android:layout_below="@id/plant_label_favorite"
+        android:layout_below="@id/plant_text_name"
         android:layout_alignParentStart="true"
         android:layout_alignParentLeft="true"
         android:textSize="16sp"
+        android:paddingLeft="3dp"
+        android:textColor="@color/myGray"
         >
     </TextView>
 
-    <TextView
-        android:id="@+id/pic_name"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="4dp"
-        android:layout_marginLeft="4dp"
-        android:lines="1"
-        android:layout_below="@id/toggleButton"
+    <ImageView
+        android:id="@+id/plant_pic"
+        android:layout_width="300dp"
+        android:layout_height="300dp"
         android:layout_alignParentEnd="true"
         android:layout_alignParentRight="true"
-        android:textSize="16sp"
-        >
-    </TextView>
+        android:layout_below="@id/toggleButton"
+        android:adjustViewBounds="true"
+
+        />
+
 
     <TextView
+
         android:id="@+id/plant_text_spacing"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -80,10 +73,14 @@
         android:layout_alignParentStart="true"
         android:layout_alignParentLeft="true"
         android:textSize="16sp"
+        android:paddingLeft="3dp"
+        android:textColor="@color/myGray"
         >
     </TextView>
 
     <TextView
+        android:layout_marginTop="@dimen/plant_sub_margin"
+        android:textStyle="bold"
         android:id="@+id/plant_label_sqft"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -92,6 +89,8 @@
         android:layout_below="@id/plant_text_spacing"
         android:layout_alignParentLeft="true"
         android:textSize="16sp"
+        android:paddingLeft="3dp"
+        android:textColor="@color/myGray"
         >
     </TextView>
 
@@ -104,10 +103,14 @@
         android:layout_below="@id/plant_label_sqft"
         android:layout_alignParentLeft="true"
         android:textSize="16sp"
+        android:paddingLeft="3dp"
+        android:textColor="@color/myGray"
         >
     </TextView>
 
     <TextView
+        android:layout_marginTop="@dimen/plant_sub_margin"
+        android:textStyle="bold"
         android:id="@+id/plant_label_depth"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -116,6 +119,8 @@
         android:layout_below="@id/plant_text_sqft"
         android:layout_alignParentLeft="true"
         android:textSize="16sp"
+        android:paddingLeft="3dp"
+        android:textColor="@color/myGray"
         >
     </TextView>
 
@@ -128,12 +133,14 @@
         android:layout_below="@id/plant_label_depth"
         android:layout_alignParentLeft="true"
         android:textSize="16sp"
+        android:paddingLeft="3dp"
+        android:textColor="@color/myGray"
         >
     </TextView>
 
-
-
     <TextView
+        android:layout_marginTop="@dimen/plant_sub_margin"
+        android:textStyle="bold"
         android:id="@+id/plant_label_spring"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -141,6 +148,8 @@
         android:lines="1"
         android:layout_below="@id/plant_text_depth"
         android:textSize="16sp"
+        android:paddingLeft="3dp"
+        android:textColor="@color/myGray"
         >
     </TextView>
 
@@ -152,10 +161,14 @@
         android:lines="1"
         android:layout_below="@id/plant_label_spring"
         android:textSize="16sp"
+        android:paddingLeft="3dp"
+        android:textColor="@color/myGray"
         >
     </TextView>
 
     <TextView
+        android:layout_marginTop="@dimen/plant_sub_margin"
+        android:textStyle="bold"
         android:id="@+id/plant_label_fall"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -163,6 +176,8 @@
         android:lines="1"
         android:layout_below="@id/plant_text_spring"
         android:textSize="16sp"
+        android:paddingLeft="3dp"
+        android:textColor="@color/myGray"
         >
     </TextView>
 
@@ -174,10 +189,14 @@
         android:lines="1"
         android:layout_below="@id/plant_label_fall"
         android:textSize="16sp"
+        android:paddingLeft="3dp"
+        android:textColor="@color/myGray"
         >
     </TextView>
 
     <TextView
+        android:layout_marginTop="@dimen/plant_sub_margin"
+        android:textStyle="bold"
         android:id="@+id/plant_label_companions"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -185,6 +204,8 @@
         android:lines="1"
         android:layout_below="@id/plant_text_fall"
         android:textSize="16sp"
+        android:paddingLeft="3dp"
+        android:textColor="@color/myGray"
         >
     </TextView>
 
@@ -195,10 +216,14 @@
         android:layout_marginLeft="4dp"
         android:layout_below="@id/plant_label_companions"
         android:textSize="16sp"
+        android:paddingLeft="3dp"
+        android:textColor="@color/myGray"
         >
     </TextView>
 
     <TextView
+        android:layout_marginTop="@dimen/plant_sub_margin"
+        android:textStyle="bold"
         android:id="@+id/plant_label_nuisance"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -206,6 +231,8 @@
         android:lines="1"
         android:layout_below="@id/plant_text_companions"
         android:textSize="16sp"
+        android:paddingLeft="3dp"
+        android:textColor="@color/myGray"
         >
     </TextView>
 
@@ -216,10 +243,14 @@
         android:layout_marginLeft="4dp"
         android:layout_below="@id/plant_label_nuisance"
         android:textSize="16sp"
+        android:paddingLeft="3dp"
+        android:textColor="@color/myGray"
         >
     </TextView>
 
     <TextView
+        android:layout_marginTop="@dimen/plant_sub_margin"
+        android:textStyle="bold"
         android:id="@+id/plant_label_helpers"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -227,6 +258,8 @@
         android:lines="1"
         android:layout_below="@id/plant_text_nuisance"
         android:textSize="16sp"
+        android:paddingLeft="3dp"
+        android:textColor="@color/myGray"
         >
     </TextView>
 
@@ -237,10 +270,14 @@
         android:layout_marginLeft="4dp"
         android:layout_below="@id/plant_label_helpers"
         android:textSize="16sp"
+        android:paddingLeft="3dp"
+        android:textColor="@color/myGray"
         >
     </TextView>
 
     <TextView
+        android:layout_marginTop="@dimen/plant_sub_margin"
+        android:textStyle="bold"
         android:id="@+id/plant_label_pests"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -248,6 +285,8 @@
         android:lines="1"
         android:layout_below="@id/plant_text_helpers"
         android:textSize="16sp"
+        android:paddingLeft="3dp"
+        android:textColor="@color/myGray"
         >
     </TextView>
 
@@ -258,6 +297,8 @@
         android:layout_marginLeft="4dp"
         android:layout_below="@id/plant_label_pests"
         android:textSize="16sp"
+        android:paddingLeft="3dp"
+        android:textColor="@color/myGray"
         >
     </TextView>
 

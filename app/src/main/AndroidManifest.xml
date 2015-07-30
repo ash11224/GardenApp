@@ -8,8 +8,7 @@
        android:anyDensity="true"></supports-screens>
 
     <application
-
-        android:icon="@mipmap/ic_launcher"
+        android:icon="@drawable/icong"
         android:label="@string/app_name"
         android:theme="@style/AppTheme" >
 
@@ -35,6 +34,7 @@
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.letitgrow.gardenapp.MainActivity" />
+
         </activity>
         <activity
             android:name=".SettingsActivity"

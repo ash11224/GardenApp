@@ -81,13 +81,12 @@ public class FetchAddressIntentService extends IntentService{
 
             // Fetch the address lines using getAddressLine,
             // join them, and send them to the thread.
-            for(int i = 0; i < address.getMaxAddressLineIndex(); i++) {
+            /*for(int i = 0; i < address.getMaxAddressLineIndex(); i++) {
                 addressFragments.add(address.getPostalCode());
-            }
+            }*/
+            String msg = address.getPostalCode();
             Log.i(TAG, getString(R.string.address_found));
-            deliverResultToReceiver(Constants.SUCCESS_RESULT,
-                    TextUtils.join(System.getProperty("line.separator"),
-                            addressFragments));
+            deliverResultToReceiver(Constants.SUCCESS_RESULT, msg);
         }
     }
 

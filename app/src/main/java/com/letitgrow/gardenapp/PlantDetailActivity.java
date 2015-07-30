@@ -1,10 +1,16 @@
 package com.letitgrow.gardenapp;
 
 import android.app.Activity;
+import android.content.SharedPreferences;
+import android.graphics.Typeface;
+import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
+import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.Spinner;
 import android.content.ContentValues;
 import android.database.Cursor;
@@ -17,13 +23,20 @@ import android.widget.ToggleButton;
 import com.letitgrow.gardenapp.MyContentProvider;
 import com.letitgrow.gardenapp.PlantTable;
 
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.Locale;
+
 /**
  * Created by Ashley on 4/18/2015.
  */
 public class PlantDetailActivity extends Activity{
 
     private TextView PlantTitleText;
-    private TextView FavoriteLabel;
+  //  private TextView FavoriteLabel;
     private TextView PlantSpacingLabel;
     private TextView PlantSpacingText;
     private TextView PerSquareFootLabel;
@@ -42,18 +55,27 @@ public class PlantDetailActivity extends Activity{
     private TextView HelpersText;
     private TextView PestsLabel;
     private TextView PestsText;
-    private TextView PicText;
+
+    private ImageView PlantPic;
+
+    private ToggleButton  FavBtn;
 
     private Uri plantUri;
+
+    Calendar FIRST_FROST_DATE = Calendar.getInstance();
+    Calendar LAST_FROST_DATE = Calendar.getInstance();
+
 
     @Override
     protected void onCreate(Bundle bundle) {
         super.onCreate(bundle);
         setContentView(R.layout.plant_detail);
 
+        getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_HIDDEN);
+
 
         PlantTitleText = (TextView) findViewById(R.id.plant_text_name);
-        FavoriteLabel = (TextView) findViewById(R.id.plant_label_favorite);
+       // FavoriteLabel = (TextView) findViewById(R.id.plant_label_favorite);
         PlantSpacingLabel = (TextView) findViewById(R.id.plant_label_spacing);
         PlantSpacingText = (TextView) findViewById(R.id.plant_text_spacing);
         PerSquareFootLabel = (TextView) findViewById(R.id.plant_label_sqft);
@@ -72,7 +94,13 @@ public class PlantDetailActivity extends Activity{
         HelpersText = (TextView) findViewById(R.id.plant_text_helpers);
         PestsLabel = (TextView) findViewById(R.id.plant_label_pests);
         PestsText = (TextView) findViewById(R.id.plant_text_pests);
-        PicText = (TextView) findViewById(R.id.pic_name);
+
+        PlantPic = (ImageView) findViewById(R.id.plant_pic);
+
+        FavBtn = (ToggleButton) findViewById(R.id.toggleButton);
+
+        if (!noFrostDates()){SetFrostDates();
+        }
 
 
         Bundle extras = getIntent().getExtras();
@@ -98,6 +126,7 @@ public class PlantDetailActivity extends Activity{
         String[] projection = { PlantDBHelper.COLUMN_PLANT,
                 PlantDBHelper.COLUMN_SPACING,
                 PlantDBHelper.COLUMN_DEPTH,
+                PlantDBHelper.DAYS_MATURITY,
                 PlantDBHelper.COLUMN_COMPANIONS,
                 PlantDBHelper.COLUMN_NUISANCES,
                 PlantDBHelper.COLUMN_HELPERS,
@@ -114,19 +143,21 @@ public class PlantDetailActivity extends Activity{
             cursor.moveToFirst();
 
             String fav = cursor.getString(cursor.getColumnIndexOrThrow(PlantDBHelper.COLUMN_FAVORITE));
-            ToggleButton  tglbtn = (ToggleButton)findViewById(R.id.toggleButton);
+            Typeface face = Typeface.createFromAsset(getAssets(), "fonts/fontawesome-webfont.ttf");
+            FavBtn.setTypeface(face);
+            //ToggleButton  FavBtn = (ToggleButton)findViewById(R.id.toggleButton);
 
             if (fav.contains("N")) {
-                tglbtn.setChecked(false);
+                FavBtn.setChecked(false);
             }
             else {
-                tglbtn.setChecked(true);
+                FavBtn.setChecked(true);
             }
 
 
             PlantTitleText.setText(cursor.getString(cursor
                     .getColumnIndexOrThrow(PlantDBHelper.COLUMN_PLANT)));
-            FavoriteLabel.setText("Favorite: ");
+           // FavoriteLabel.setText("Favorite: ");
 
             PlantSpacingLabel.setText("Plant Spacing: ");
             PerSquareFootLabel.setText("Plants per Sq Ft: ");
@@ -150,44 +181,39 @@ public class PlantDetailActivity extends Activity{
             PlantDepthText.setText(String.format("%s inches", str));
 
             SpringPlantingLabel.setText("Spring Planting: ");
-            str1 = cursor.getString(cursor
-                    .getColumnIndexOrThrow(PlantDBHelper.SPRING_BEG));
-            str2 = cursor.getString(cursor
-                    .getColumnIndexOrThrow(PlantDBHelper.SPRING_END));
-            if (isInteger(str1)){
-                int1 = Integer.parseInt(str1);
-            }
-            else int1 = 0;
-
-            if (isInteger(str2)){
-                int2 = Integer.parseInt(str1);
-            }
-            else int2 = 0;
-
-            if ((int1 == 0) && (int2 == 0)){
-               SpringPlantingText.setText("Not Recommended");
-            }
-            else SpringPlantingText.setText(String.format("%s to %s weeks after last frost", str1,str2));
-
             FallPlantingLabel.setText("Fall Planting: ");
-            str1 = cursor.getString(cursor
-                    .getColumnIndexOrThrow(PlantDBHelper.FALL_BEG));
-            str2 = cursor.getString(cursor
-                    .getColumnIndexOrThrow(PlantDBHelper.FALL_END));
-            if (isInteger(str1)){
-                int1 = Integer.parseInt(str1);
-            }
-            else int1 = 0;
+            if (noFrostDates()){
+                SpringPlantingText.setText("Lucky duck! You can plant all year!");
+                FallPlantingText.setText("Lucky duck! You can plant all year!");
+            } else {
+                str1 = cursor.getString(cursor
+                        .getColumnIndexOrThrow(PlantDBHelper.SPRING_BEG));
+                str2 = cursor.getString(cursor
+                        .getColumnIndexOrThrow(PlantDBHelper.SPRING_END));
+                if (isInteger(str1)) {
+                    int1 = Integer.parseInt(str1);
+                } else int1 = 0;
 
-            if (isInteger(str2)){
-                int2 = Integer.parseInt(str1);
-            }
-            else int2 = 0;
+                if (isInteger(str2)) {
+                    int2 = Integer.parseInt(str2);
+                } else int2 = 0;
 
-            if ((int1 == 0) && (int2 == 0)){
-                FallPlantingText.setText("Not Recommended");
+                SpringPlantingText.setText(dateRange(LAST_FROST_DATE, int1, int2));
+
+                str1 = cursor.getString(cursor
+                        .getColumnIndexOrThrow(PlantDBHelper.FALL_BEG));
+                str2 = cursor.getString(cursor
+                        .getColumnIndexOrThrow(PlantDBHelper.FALL_END));
+                if (isInteger(str1)) {
+                    int1 = Integer.parseInt(str1);
+                } else int1 = 0;
+
+                if (isInteger(str2)) {
+                    int2 = Integer.parseInt(str2);
+                } else int2 = 0;
+
+                FallPlantingText.setText(dateRange(FIRST_FROST_DATE, int1, int2));
             }
-            else FallPlantingText.setText(String.format("%s to %s weeks after first frost", str1,str2));
 
             CompanionsLabel.setText("Companions: ");
             str = cursor.getString(cursor
@@ -211,8 +237,12 @@ public class PlantDetailActivity extends Activity{
 
             //str = cursor.getString(cursor
             //        .getColumnIndexOrThrow(PlantTable.PIC_NAME));
-            str = "";
-            PicText.setText(String.format("%s", str));
+            str = cursor.getString(cursor
+                    .getColumnIndexOrThrow(PlantDBHelper.PIC_NAME));
+            int resID = getResources().getIdentifier(str.toLowerCase(),
+                    "drawable", getPackageName());
+
+            PlantPic.setImageResource(resID);
 
             // always close the cursor
             cursor.close();
@@ -266,4 +296,85 @@ public class PlantDetailActivity extends Activity{
         }
         return true;
     }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+
+        PlantPic.setImageDrawable(null);
+    }
+
+    public void SetFrostDates(){
+
+        Date ffDate = FIRST_FROST_DATE.getTime();
+        Date lfDate = LAST_FROST_DATE.getTime();
+        /*SharedPreferences mySharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
+
+        String ffd_str = mySharedPreferences.getString("ffd", "");
+        String lfd_str = mySharedPreferences.getString("lfd", "");*/
+
+        SharedPreferences prefs =
+                PreferenceManager.getDefaultSharedPreferences(this);
+        String ffd_str = prefs.getString("ffd", "");
+        String lfd_str = prefs.getString("lfd", "");
+
+        DateFormat format = new SimpleDateFormat("yyyy.MM.dd", Locale.ENGLISH);
+        try {
+            ffDate = format.parse(ffd_str);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        try {
+            lfDate = format.parse(lfd_str);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+
+        FIRST_FROST_DATE.setTime(ffDate);
+        LAST_FROST_DATE.setTime(lfDate);
+
+    }
+
+    public static String dateRange(Calendar frostDate, int beg, int end){
+        String result = "Not recommended";
+
+        if ((beg == 0) && (end == 0)){
+            result = "Not recommended";
+        } else {
+
+
+            DateFormat format = new SimpleDateFormat("MMMM d", Locale.ENGLISH);
+            Calendar BEG = Calendar.getInstance();
+            Calendar END = Calendar.getInstance();
+
+            BEG.set(Calendar.YEAR, frostDate.get(Calendar.YEAR));
+            BEG.set(Calendar.MONTH, frostDate.get(Calendar.MONTH)); //zero based
+            BEG.set(Calendar.DAY_OF_MONTH, frostDate.get(Calendar.DAY_OF_MONTH));
+
+            END.set(Calendar.YEAR, frostDate.get(Calendar.YEAR));
+            END.set(Calendar.MONTH, frostDate.get(Calendar.MONTH)); //zero based
+            END.set(Calendar.DAY_OF_MONTH, frostDate.get(Calendar.DAY_OF_MONTH));
+
+            BEG.add(Calendar.DAY_OF_MONTH, (int) (beg * 7.5));
+            END.add(Calendar.DAY_OF_MONTH, (int) (end * 7.5));
+
+            result = format.format(BEG.getTime()) + " through " + format.format(END.getTime());
+
+        }
+        return result;
+    }
+
+    public boolean noFrostDates(){
+        Boolean none = false;
+        SharedPreferences prefs =
+                PreferenceManager.getDefaultSharedPreferences(this);
+        String ffd_str = prefs.getString("ffd", "");
+        String lfd_str = prefs.getString("lfd", "");
+
+        if (ffd_str.equals(lfd_str)){
+            none = true;
+        }
+        return none;
+    }
+
 }

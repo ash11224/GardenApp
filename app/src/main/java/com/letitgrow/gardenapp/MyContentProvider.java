@@ -179,6 +179,7 @@ public class MyContentProvider extends ContentProvider{
                     PlantDBHelper.COLUMN_SPACING,
                     PlantDBHelper.COLUMN_DEPTH,
                     PlantDBHelper.COLUMN_COMPANIONS,
+                    PlantDBHelper.DAYS_MATURITY,
                     PlantDBHelper.COLUMN_NUISANCES,
                     PlantDBHelper.COLUMN_HELPERS,
                     PlantDBHelper.COLUMN_PESTS,

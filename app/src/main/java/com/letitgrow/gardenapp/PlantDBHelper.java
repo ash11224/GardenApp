@@ -18,13 +18,14 @@ import java.io.OutputStream;
 public class PlantDBHelper extends SQLiteOpenHelper {
 
     private static String PD_PATH = "/data/data/com.letitgrow.gardenapp/databases/";
-    private static String PD_NAME = "plants.db";
+    private static String PD_NAME = "plants6.db";
 
     public static final String TABLE_PLANTS = "PlantDB";
     public static final String COLUMN_ID = "_id";
     public static final String COLUMN_PLANT = "plantName";
     public static final String COLUMN_SPACING = "plantSpacing";
     public static final String COLUMN_DEPTH = "seedDepth";
+    public static final String DAYS_MATURITY = "daysToMaturity";
     public static final String COLUMN_COMPANIONS = "companionPlants";
     public static final String COLUMN_NUISANCES = "nuisancePlants";
     public static final String COLUMN_HELPERS = "helperBugs";
@@ -48,12 +49,10 @@ public class PlantDBHelper extends SQLiteOpenHelper {
     }
 
     public void createDataBase() throws IOException {
+        boolean dbPathExist = checkDataBase();
 
-        boolean dbExist = checkDataBase();
-
-        if (!dbExist){
+        if (!dbPathExist){
             this.getReadableDatabase();
-
             try {
                 copyDataBase();
 
@@ -71,6 +70,7 @@ public class PlantDBHelper extends SQLiteOpenHelper {
         try{
             String myPath = PD_PATH + PD_NAME;
             pathExists = SQLiteDatabase.openDatabase(myPath, null, SQLiteDatabase.OPEN_READONLY);
+
 
         }catch(SQLiteException e){
 
@@ -117,6 +117,8 @@ public class PlantDBHelper extends SQLiteOpenHelper {
     @Override
     public void onCreate(SQLiteDatabase db) {
 
+
+
     }
 
     @Override
@@ -125,7 +127,8 @@ public class PlantDBHelper extends SQLiteOpenHelper {
                 + oldVersion + " to " + newVersion
                 + ", which will destroy all old data");
 
-        myContext.deleteDatabase(PD_NAME);
+
+    myContext.deleteDatabase(PD_NAME);
 
         try {
             createDataBase();

@@ -36,6 +36,9 @@ public class ZoneDataSource {
         if (cursor.getCount() > 0) {
             cursor.moveToFirst();
             String aDate = cursor.getString(2);
+            if (aDate.equals("NULL") || aDate.isEmpty()){
+              aDate = "2015.01.01";
+            }
             cursor.close();
             return aDate;
         }
@@ -50,6 +53,9 @@ public class ZoneDataSource {
         if (cursor.getCount() > 0) {
             cursor.moveToFirst();
             String aDate = cursor.getString(3);
+            if (aDate.equals("NULL") || aDate.isEmpty()){
+                aDate = "2015.01.01";
+            }
             cursor.close();
             return aDate;
         }

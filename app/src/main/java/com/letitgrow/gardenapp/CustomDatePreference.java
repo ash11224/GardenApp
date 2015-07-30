@@ -106,7 +106,7 @@ public class CustomDatePreference extends DialogPreference implements
     public void setDate(String dateString) {
         this.dateString = dateString;
         persistDate(this.dateString);
-       // setSummary();
+        setSummary(summaryFormatter().format(getDate().getTime()));
     }
 
     public Calendar getDate() {

@@ -8,38 +8,53 @@
     tools:context="com.letitgrow.gardenapp.PlantNowActivity">
 
 
+
     <LinearLayout
-        android:id="@+id/topLayout"
-        android:layout_width="fill_parent"
-        android:layout_height="50sp"
-        android:layout_alignParentTop="true">
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+      >
 
-    <TextView
-        android:id="@+id/plantNow"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:textSize="24sp"
-        android:layout_weight="3"
-     />
+        <LinearLayout
+            android:id="@+id/topLayout"
+            android:layout_width="fill_parent"
+            android:layout_height="50sp"
+            android:layout_alignParentTop="true">
 
-    <ToggleButton
-        android:id="@+id/mainToggleButtonNow"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:textOn="ALL"
-        android:textOff="FAVS"
-        android:onClick="onNowToggleClicked"
-        android:layout_weight="1"
-        />
+            <TextView
+                android:id="@+id/plantNow"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:textSize="24sp"
+                android:layout_weight="3"
+                />
 
-    </LinearLayout>
+            <Button
+                android:id="@+id/CalButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/Cal"
+                android:textColor="@color/myGray"
+                android:onClick="onCalClicked"
+                android:background="@android:color/transparent"/>
 
+            <ToggleButton
+                android:id="@+id/mainToggleButtonNow"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:textOn="ALL"
+                android:textOff="FAVS"
+                android:onClick="onNowToggleClicked"
+                android:layout_weight="1"
+                />
+
+        </LinearLayout>
 
     <ListView xmlns:android="http://schemas.android.com/apk/res/android"
         android:id="@+id/list_PlantNow"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/topLayout"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+
         android:layout_weight="1.0"/>
 
 
@@ -73,6 +88,7 @@
     </LinearLayout>
 
 
+</LinearLayout>
 
 
 </RelativeLayout>

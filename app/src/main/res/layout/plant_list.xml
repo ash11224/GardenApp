@@ -3,38 +3,49 @@
     android:orientation="vertical" android:layout_width="match_parent"
     android:layout_height="match_parent">
 
+    <LinearLayout
+        android:id="@+id/mainButtonLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
 
     <ToggleButton
         android:id="@+id/mainToggleButton"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textOn="FAVS"
-        android:textOff="ALL"
-        android:onClick="onMainToggleClicked"/>
+            android:layout_height="match_parent"
+            android:textOn="View All"
+            android:textOff="View Favorites"
+            android:onClick="onMainToggleClicked"
+            android:background="@color/myGray"
+            android:textColor="@color/background_holo_light"
+            android:layout_weight=".35"
+            android:layout_marginRight="1dp"/>
 
-    <Button
-        android:id="@+id/NowButton"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_toEndOf="@+id/mainToggleButton"
-        android:layout_toRightOf="@+id/mainToggleButton"
-        android:text="PLANT NOW"
-        android:onClick="onPlantNowClicked"/>
+        <Button
+
+            android:id="@+id/NowButton"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:text="What to Plant Now"
+            android:onClick="onPlantNowClicked"
+            android:background="@color/myGray"
+            android:textColor="@color/background_holo_light"
+            android:layout_weight=".65"
+            />
+        </LinearLayout>
+
+        <ListView
+            android:id="@android:id/list"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/mainButtonLayout">
+        </ListView>
+
+        <TextView
+            android:id="@android:id/empty"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/no_plants"
+            android:layout_below="@id/mainButtonLayout"/>
 
 
-    <ListView
-        android:id="@android:id/list"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/mainToggleButton">
-    </ListView>
-
-    <TextView
-        android:id="@android:id/empty"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/no_plants"
-        android:layout_below="@id/mainToggleButton"/>
-
-
-</RelativeLayout>
+    </RelativeLayout>
